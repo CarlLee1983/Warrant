@@ -22,11 +22,12 @@ proven by this repository's own verification.
 3. **The standard is not yours to change.** Do not change requirements, weaken
    or reinterpret acceptance criteria, delete or skip failing tests, edit the
    Story to fit the work, or widen scope. When work outside the Story is
-   needed, stop and report it.
+   needed, or a criterion conflicts with Out of Scope, stop and report it.
 
 Finish with a completion report of three sections: (1) each acceptance
 criterion → command run → observed result; (2) skipped or blocked checks;
-(3) residual risks. If the verification command did not pass, or any criterion
-lacks a passing observation, the report says **partial**, never done.
+(3) residual risks. An inference or substitute check is not an observation.
+If the verification command did not pass, or any criterion lacks a passing
+observation, the report says **partial**, never done.
 
 Directories under `specs/stories/` are legacy records, not pending work.

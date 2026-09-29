@@ -49,6 +49,7 @@ If `AGENTS.md` declares no verification command, report that and stop. Do not pi
 - Implement the smallest change that satisfies the acceptance criteria.
 - When you find that work outside the Story is needed (Out of Scope, or not mentioned at all), stop and report it. The human decides whether to widen this Story or write another.
 - Never change requirements, weaken or reinterpret an acceptance criterion, delete or skip a failing test, or edit the Story file to make the work fit.
+- When an acceptance criterion cannot be met without breaking Out of Scope, or two criteria contradict each other, the Story itself is the problem: stop and report the conflict before implementing. Do not resolve it with a workaround.
 - Run the verification command. On failure, repair the cause and run it again until it passes. If the repair lies outside the Story, stop and report it instead.
 
 ### Completion report
@@ -58,5 +59,7 @@ End with exactly these three sections. The report goes in the pull request descr
 1. **Evidence**: for each acceptance criterion, a reproducible observation from this working tree: the command you ran and its output, or the `file:line` you inspected and what it shows. Include the verification command's own result.
 2. **Skipped or blocked**: every check you could not run, and why.
 3. **Residual risks**: what the evidence does not cover.
+
+An inference, a substitute check, or an observation of something other than what the criterion states is not a passing observation, even when you disclose it.
 
 If the verification command did not pass, or any acceptance criterion lacks a passing observation, the report's conclusion is **partial**. Never round partial up to done. Never claim a check passed without having run it.
