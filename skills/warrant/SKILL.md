@@ -21,8 +21,8 @@ Read the repository's `AGENTS.md`. The Warrant section declares the **verificati
 
 When the user describes work that has no Story yet:
 
-1. Write `specs/stories/<slug>.md` with exactly three sections: **Goal**, **Out of Scope**, **Acceptance Criteria**. Use `story-template.md` in this skill's directory as the shape. Add no status, owner, priority, or lifecycle field.
-2. Make each acceptance criterion one statement that could be checked by running something or looking at something. Flag every criterion you cannot see how to check, and every vague word ("fast", "clean", "properly"), and propose a checkable rewrite. The human decides.
+1. Write `specs/stories/<slug>.md` with exactly three sections: **Goal**, **Out of Scope**, **Acceptance Criteria**. Use `story-template.md` in this skill's directory as the shape; if you cannot read it, the shape is a `# Title` heading followed by exactly those three `##` sections. Add no status, owner, priority, or lifecycle field.
+2. Read every file you cite in the Story before citing it; a `file:line` or line range from memory, a summary, or another agent is not checked. Make each acceptance criterion one statement that could be checked by running something or looking at something. Flag every criterion you cannot see how to check, and every vague word ("fast", "clean", "properly"), and propose a checkable rewrite. The human decides.
 3. **Stop.** Do not implement and do not commit the draft. A Story you drafted is not approved until a human approves it.
 
 ## Mode 2: implement a Story
