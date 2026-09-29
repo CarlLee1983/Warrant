@@ -42,6 +42,8 @@ Directories under `specs/stories/` are legacy records, not pending work.
 
 - The product ships rules only. Do not add scripts, a CLI, or packages for
   adopters; see `docs/adr/0001-enforcement-delegated-to-adopters.md`.
-- `skills/warrant/` is the versioned surface. `README.md`, `CONTEXT.md`, and
+- `skills/warrant/` is the versioned surface. Every change to it bumps
+  `version` in `.claude-plugin/plugin.json`; installed copies only refresh when
+  the version changes. `README.md`, `CONTEXT.md`, and
   `docs/adr/` are written in Traditional Chinese; the skill, block, and Story
   template in English.
