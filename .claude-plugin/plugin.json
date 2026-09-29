@@ -1,0 +1,10 @@
+{
+  "name": "warrant",
+  "version": "0.0.0",
+  "description": "Bound AI agent work to human-approved Stories; prove completion with the repository's own verification command.",
+  "author": {
+    "name": "Carl Lee"
+  },
+  "repository": "https://github.com/CarlLee1983/Warrant",
+  "license": "MIT"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "warrant",
+  "owner": {
+    "name": "Carl Lee"
+  },
+  "metadata": {
+    "description": "Warrant: human-approved intent, evidence-proven completion."
+  },
+  "plugins": [
+    {
+      "name": "warrant",
+      "description": "Bound AI agent work to human-approved Stories; prove completion with the repository's own verification command.",
+      "source": "./"
+    }
+  ]
+}
