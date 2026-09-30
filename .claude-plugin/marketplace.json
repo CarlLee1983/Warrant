@@ -10,7 +10,7 @@
     {
       "name": "warrant",
       "description": "Bound AI agent work to human-approved Stories; prove completion with the repository's own verification command.",
-      "source": "./"
+      "source": "./plugin"
     }
   ]
 }
