@@ -1,6 +1,6 @@
 {
   "name": "warrant",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Bound AI agent work to human-approved Stories; prove completion with the repository's own verification command.",
   "author": {
     "name": "Carl Lee"
