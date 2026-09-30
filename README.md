@@ -21,9 +21,9 @@ Warrant 不決定「做哪件工作」，也不規範人如何審查。強制力
 
 ## 採用
 
-1. 把 [`skills/warrant/agents-block.md`](skills/warrant/agents-block.md) 貼進 repo 的 `AGENTS.md`，填入唯一的驗證指令。
+1. 把 [`plugin/skills/warrant/agents-block.md`](plugin/skills/warrant/agents-block.md) 貼進 repo 的 `AGENTS.md`，填入唯一的驗證指令。
 2. 讓該驗證指令在 CI 的每個 PR 上執行。Warrant 不強制這一點，但規則二的強制力靠它。
-3. 以 [`skills/warrant/story-template.md`](skills/warrant/story-template.md) 為形狀，在 `specs/stories/` 下寫 Story。
+3. 以 [`plugin/skills/warrant/story-template.md`](plugin/skills/warrant/story-template.md) 為形狀，在 `specs/stories/` 下寫 Story。
 
 非 Claude 的 agent 只需要第 1 步的區塊。
 
@@ -42,6 +42,24 @@ make verify
 ```
 
 依序以 `claude plugin validate --strict` 驗證 marketplace、plugin 設定與 skills，再執行 Markdown lint。
+
+plugin 本體放在 `plugin/`，marketplace 只指向它，所以安裝內容不含 `evals/`。
+
+## 行為驗收（eval）
+
+```sh
+make eval
+```
+
+以 `claude plugin eval` 執行 `evals/cases/` 下的九個情境，每個情境跑三次，三次至少兩次通過才算過。它使用你的 Claude Code 憑證，每次執行都會產生模型費用（上限 USD 10），因此不在 CI 執行，也不屬於 `make verify`。結果寫在 `evals/results/`，已被 git 忽略。
+
+每個情境的 fixture 都以受測 plugin 的 `skills/warrant/agents-block.md` 產生 `AGENTS.md`，只填入驗證指令。`evals/mutant/` 是反向指示的 plugin 副本：它的 skill 與區塊把「停下等核准」「範圍衝突要停」「推論不算觀察」三條規則改寫成相反的明確指示，其餘與 `plugin/` 相同，用來證明 grader 能分辨對錯：
+
+```sh
+make eval EVAL_PLUGIN=evals/mutant
+```
+
+此時情境 03、05、09 應低於門檻。
 
 ## 授權
 
