@@ -43,7 +43,7 @@ Migrating from PraxisBound: delete the protocol files and marker files PraxisBou
 make verify
 ```
 
-Validates the marketplace, the plugin manifest, and the skills with `claude plugin validate --strict`, in that order, then runs Markdown lint. Before that, it checks that `README.zh-TW.md` and `README.ja.md` keep this file's structure: the same number of `##` headings, identical code blocks, and the same link targets. It does not check what the translations mean.
+Validates the marketplace, the plugin manifest, and the skills with `claude plugin validate --strict`, in that order, then runs Markdown lint. Before that, it checks that `README.zh-TW.md` and `README.ja.md` keep this file's structure: the same number of `##` headings, identical code blocks, the same link targets, and the same number of paragraphs and list items. It does not check what the translations mean.
 
 The plugin itself lives in `plugin/`, and the marketplace points only there, so an installation does not include `evals/`.
 
