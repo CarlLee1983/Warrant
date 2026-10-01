@@ -1,66 +1,68 @@
 # Warrant
 
-Warrant 讓 AI agent 的工作以人核准的意圖為界線，以 repo 自己的驗證結果證明完成，最後交給人審查。它只有規則：一份 Claude Code skill、一段可貼進任何 agent 的 `AGENTS.md` 區塊、一份 Story 模板。沒有腳本、CLI 或套件。
+**English** | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md)
 
-## 三條規則
+Warrant bounds an AI agent's work by human-approved intent, proves completion with the repository's own verification, and hands the result to a human for review. It ships rules only: one Claude Code skill, one `AGENTS.md` block you can paste into any agent's setup, and one Story template. No scripts, CLI, or packages.
 
-1. **意圖由人核准**：工作從 `specs/stories/<slug>.md` 的 Story 開始。Story 只有目標（Goal）、範圍外（Out of Scope）、驗收條件（Acceptance Criteria）三段；只有在人把它 commit 進主分支，或在當次對話中明確指派時才算核准。
-2. **完成由證據證明**：完成只由 repo 在 `AGENTS.md` 宣告的唯一驗證指令決定，每條驗收條件都要對應到一次實際觀察。
-3. **agent 不得改寫標準**：不改需求、不放寬驗收條件、不擴大範圍；需要做範圍外的事就停下回報。
+## Three rules
 
-agent 最後交出三段式完成回報：驗收條件對應證據、跳過或被擋的檢查、殘餘風險。任何一條缺少通過的證據，結論就是「部分完成」。
+1. **Intent is approved by a human**: work starts from a Story at `specs/stories/<slug>.md`. A Story has exactly three sections: Goal, Out of Scope, and Acceptance Criteria. It counts as approved only when a human has committed it to the default branch, or has explicitly assigned it in the current session.
+2. **Completion is proven by evidence**: completion is decided only by the single verification command the repository declares in `AGENTS.md`, and every acceptance criterion must map to an actual observation.
+3. **The agent does not rewrite the standard**: no changing requirements, no loosening acceptance criteria, no widening scope. When work outside the Story is needed, the agent stops and reports it.
 
-Warrant 不決定「做哪件工作」，也不規範人如何審查。強制力來自採用端的 CI 與人工審查，理由見 [ADR-0001](docs/adr/0001-enforcement-delegated-to-adopters.md)。
+The agent finishes with a three-section completion report: evidence for each acceptance criterion, skipped or blocked checks, and residual risks. If any criterion lacks passing evidence, the conclusion is "partial".
 
-## 安裝（Claude Code）
+Warrant does not decide which work to do, and it does not prescribe how humans review. Enforcement comes from the adopter's CI and human review; see [ADR-0001](docs/adr/0001-enforcement-delegated-to-adopters.md) for why.
+
+## Install (Claude Code)
 
 ```text
 /plugin marketplace add CarlLee1983/Warrant
 /plugin install warrant@warrant
 ```
 
-## 採用
+## Adopt
 
-1. 把 [`plugin/skills/warrant/agents-block.md`](plugin/skills/warrant/agents-block.md) 貼進 repo 的 `AGENTS.md`，填入唯一的驗證指令。
-2. 讓該驗證指令在 CI 的每個 PR 上執行。Warrant 不強制這一點，但規則二的強制力靠它。
-3. 以 [`plugin/skills/warrant/story-template.md`](plugin/skills/warrant/story-template.md) 為形狀，在 `specs/stories/` 下寫 Story。
+1. Paste [`plugin/skills/warrant/agents-block.md`](plugin/skills/warrant/agents-block.md) into your repository's `AGENTS.md` and fill in the single verification command.
+2. Run that verification command in CI on every PR. Warrant does not enforce this, but rule 2 depends on it.
+3. Write Stories under `specs/stories/`, shaped like [`plugin/skills/warrant/story-template.md`](plugin/skills/warrant/story-template.md).
 
-非 Claude 的 agent 只需要第 1 步的區塊。
+Agents other than Claude need only the block from step 1.
 
-從 PraxisBound 遷移：刪除 PraxisBound 安裝的協定檔案與標記檔，改貼 Warrant 區塊。既有的目錄形式 Story 原樣保留，視為歷史紀錄。
+Migrating from PraxisBound: delete the protocol files and marker files PraxisBound installed, and paste the Warrant block instead. Existing directory-style Stories stay as they are and are treated as historical records.
 
-## 文件
+## Documentation
 
-- [CONTEXT.md](CONTEXT.md)：詞彙表
-- [docs/adr/](docs/adr/)：架構決策
-- [specs/stories/](specs/stories/)：Warrant 自己的 Story
+- [CONTEXT.md](CONTEXT.md): glossary
+- [docs/adr/](docs/adr/): architecture decisions
+- [specs/stories/](specs/stories/): Warrant's own Stories
 
-## 驗證
+## Verification
 
 ```sh
 make verify
 ```
 
-依序以 `claude plugin validate --strict` 驗證 marketplace、plugin 設定與 skills，再執行 Markdown lint。
+Validates the marketplace, the plugin manifest, and the skills with `claude plugin validate --strict`, in that order, then runs Markdown lint.
 
-plugin 本體放在 `plugin/`，marketplace 只指向它，所以安裝內容不含 `evals/`。
+The plugin itself lives in `plugin/`, and the marketplace points only there, so an installation does not include `evals/`.
 
-## 行為驗收（eval）
+## Behaviour evals
 
 ```sh
 make eval
 ```
 
-以 `claude plugin eval` 執行 `evals/cases/` 下的九個情境，每個情境跑三次，三次至少兩次通過才算過。它使用你的 Claude Code 憑證，每次執行都會產生模型費用（上限 USD 10），因此不在 CI 執行，也不屬於 `make verify`。結果寫在 `evals/results/`，已被 git 忽略。
+Runs the nine scenarios under `evals/cases/` with `claude plugin eval`. Each scenario runs three times and passes when at least two of the three runs pass. It uses your Claude Code credentials and every run incurs model costs (capped at USD 10), so it does not run in CI and is not part of `make verify`. Results are written to `evals/results/`, which git ignores.
 
-每個情境的 fixture 都以受測 plugin 的 `skills/warrant/agents-block.md` 產生 `AGENTS.md`，只填入驗證指令。`evals/mutant/` 是反向指示的 plugin 副本：它的 skill 與區塊把「停下等核准」「範圍衝突要停」「推論不算觀察」三條規則改寫成相反的明確指示，其餘與 `plugin/` 相同，用來證明 grader 能分辨對錯：
+Each scenario's fixture generates `AGENTS.md` from the plugin under test's `skills/warrant/agents-block.md`, filling in only the verification command. `evals/mutant/` is a copy of the plugin with inverted instructions: its skill and block rewrite three rules — "stop and wait for approval", "stop on a scope conflict", and "an inference is not an observation" — into explicit opposite instructions, and are otherwise identical to `plugin/`. It proves the graders can tell right from wrong:
 
 ```sh
 make eval EVAL_PLUGIN=evals/mutant
 ```
 
-此時情境 03、05、09 應低於門檻。
+In that run, scenarios 03, 05, and 09 should fall below the threshold.
 
-## 授權
+## License
 
 [MIT](LICENSE)
