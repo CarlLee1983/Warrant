@@ -43,7 +43,7 @@ PraxisBound からの移行：PraxisBound がインストールしたプロト�
 make verify
 ```
 
-`claude plugin validate --strict` で marketplace、plugin 設定、skills を順に検証し、続いて Markdown の lint を実行します。
+`claude plugin validate --strict` で marketplace、plugin 設定、skills を順に検証し、続いて Markdown の lint を実行します。その前に、`README.zh-TW.md` と `README.ja.md` が `README.md` と同じ構造を保っているかを確認します。`##` 見出しの数、コードブロックの内容、リンク先がすべて一致している必要があります。訳文の意味は確認しません。
 
 plugin 本体は `plugin/` にあり、marketplace はそこだけを指しているため、インストール内容に `evals/` は含まれません。
 

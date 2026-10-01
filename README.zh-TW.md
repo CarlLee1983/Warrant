@@ -43,7 +43,7 @@ Warrant 不決定「做哪件工作」，也不規範人如何審查。強制力
 make verify
 ```
 
-依序以 `claude plugin validate --strict` 驗證 marketplace、plugin 設定與 skills，再執行 Markdown lint。
+依序以 `claude plugin validate --strict` 驗證 marketplace、plugin 設定與 skills，再執行 Markdown lint。在這之前，它會先檢查 `README.zh-TW.md` 與 `README.ja.md` 是否和 `README.md` 結構一致：`##` 標題數相同、程式碼區塊完全相同、連結目標相同。它不檢查譯文的意思。
 
 plugin 本體放在 `plugin/`，marketplace 只指向它，所以安裝內容不含 `evals/`。
 
