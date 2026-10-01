@@ -8,7 +8,7 @@ Warrant bounds an AI agent's work by human-approved intent, proves completion wi
 
 1. **Intent is approved by a human**: work starts from a Story at `specs/stories/<slug>.md`. A Story has exactly three sections: Goal, Out of Scope, and Acceptance Criteria. It counts as approved only when a human has committed it to the default branch, or has explicitly assigned it in the current session.
 2. **Completion is proven by evidence**: completion is decided only by the single verification command the repository declares in `AGENTS.md`, and every acceptance criterion must map to an actual observation.
-3. **The agent does not rewrite the standard**: no changing requirements, no loosening acceptance criteria, no widening scope. When work outside the Story is needed, the agent stops and reports it.
+3. **The agent must not rewrite the standard**: no changing requirements, no loosening acceptance criteria, no widening scope. When work outside the Story is needed, the agent stops and reports it.
 
 The agent finishes with a three-section completion report: evidence for each acceptance criterion, skipped or blocked checks, and residual risks. If any criterion lacks passing evidence, the conclusion is "partial".
 
@@ -24,7 +24,7 @@ Warrant does not decide which work to do, and it does not prescribe how humans r
 ## Adopt
 
 1. Paste [`plugin/skills/warrant/agents-block.md`](plugin/skills/warrant/agents-block.md) into your repository's `AGENTS.md` and fill in the single verification command.
-2. Run that verification command in CI on every PR. Warrant does not enforce this, but rule 2 depends on it.
+2. Run that verification command in CI on every PR. Warrant does not enforce this, but enforcement of rule 2 depends on it.
 3. Write Stories under `specs/stories/`, shaped like [`plugin/skills/warrant/story-template.md`](plugin/skills/warrant/story-template.md).
 
 Agents other than Claude need only the block from step 1.
@@ -55,7 +55,7 @@ make eval
 
 Runs the nine scenarios under `evals/cases/` with `claude plugin eval`. Each scenario runs three times and passes when at least two of the three runs pass. It uses your Claude Code credentials and every run incurs model costs (capped at USD 10), so it does not run in CI and is not part of `make verify`. Results are written to `evals/results/`, which git ignores.
 
-Each scenario's fixture generates `AGENTS.md` from the plugin under test's `skills/warrant/agents-block.md`, filling in only the verification command. `evals/mutant/` is a copy of the plugin with inverted instructions: its skill and block rewrite three rules — "stop and wait for approval", "stop on a scope conflict", and "an inference is not an observation" — into explicit opposite instructions, and are otherwise identical to `plugin/`. It proves the graders can tell right from wrong:
+Each scenario's fixture generates `AGENTS.md` from `skills/warrant/agents-block.md` in the plugin under test, filling in only the verification command. `evals/mutant/` is a copy of the plugin with inverted instructions: its skill and block rewrite three rules — "stop and wait for approval", "stop on a scope conflict", and "an inference is not an observation" — into explicit opposite instructions; everything else is identical to `plugin/`. It exists to show that the graders can tell right from wrong:
 
 ```sh
 make eval EVAL_PLUGIN=evals/mutant
