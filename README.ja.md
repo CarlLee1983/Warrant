@@ -29,11 +29,11 @@ Warrant は「どの作業をするか」を決めず、人間のレビュー方
 
 その他のエージェント（Codex、Cursor、Copilot、Gemini CLI など）：[docs/agents.md](docs/agents.md) を参照してください。
 
-エージェント自身に Warrant をインストールさせるには、次のプロンプトを貼り付け、プレースホルダーを検証コマンドに置き換えてください。エージェントはこのリポジトリの `main` ブランチから取得した手順に従うので、コミットする前に、エージェントが一覧にしたファイルを確認してください。
+エージェント自身に Warrant をインストールさせるには、次のプロンプトを貼り付け、プレースホルダーを検証コマンドに置き換えてください。エージェントはこのリポジトリの最新リリースに添付された手順に従うので、コミットする前に、エージェントが一覧にしたファイルを確認してください。
 
 ```text
 Install Warrant (https://github.com/CarlLee1983/Warrant) in this repository.
-Read https://raw.githubusercontent.com/CarlLee1983/Warrant/main/docs/agents.md
+Read https://github.com/CarlLee1983/Warrant/releases/latest/download/agents.md
 and follow its "Instructions for agents" section exactly.
 Verification command: <verification command>
 ```

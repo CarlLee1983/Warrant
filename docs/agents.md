@@ -22,7 +22,7 @@ decides whether work in your repository is done:
 
 ```text
 Install Warrant (https://github.com/CarlLee1983/Warrant) in this repository.
-Read https://raw.githubusercontent.com/CarlLee1983/Warrant/main/docs/agents.md
+Read https://github.com/CarlLee1983/Warrant/releases/latest/download/agents.md
 and follow its "Instructions for agents" section exactly.
 Verification command: <verification command>
 ```
@@ -37,7 +37,7 @@ in. Follow these steps in order and stop where a step says so.
    human for it. Do not choose, guess, or infer one from the repository: the
    verification command decides when work is done, and only a human may set it.
 2. Download the raw block from
-   <https://raw.githubusercontent.com/CarlLee1983/Warrant/main/plugin/skills/warrant/agents-block.md>
+   <https://github.com/CarlLee1983/Warrant/releases/latest/download/agents-block.md>
    with a tool that returns the file unmodified (for example `curl -fsSL`).
    Copy it byte for byte: do not summarise, reformat, or translate it. Change
    only the text between the backticks on the `**Verification command:**`
