@@ -4,7 +4,8 @@ type Link = { label: string; href: string };
 type Item = { title: string; body: string };
 
 export type Dictionary = {
-  lang: string;
+  localeName: string;
+  languageSwitcher: { label: string };
   meta: { title: string; description: string; ogImageAlt: string };
   hero: {
     title: string;

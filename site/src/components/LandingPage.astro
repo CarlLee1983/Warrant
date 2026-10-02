@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import type { Dictionary } from '../i18n/types';
+import { dictionaries } from '../i18n';
+import type { Locale } from '../i18n/types';
+import LanguageSwitcher from './LanguageSwitcher.astro';
 import Adopt from './Adopt.astro';
 import Flow from './Flow.astro';
 import Footer from './Footer.astro';
@@ -10,13 +12,15 @@ import Rules from './Rules.astro';
 import Why from './Why.astro';
 
 interface Props {
-  t: Dictionary;
+  locale: Locale;
 }
 
-const { t } = Astro.props;
+const { locale } = Astro.props;
+const t = dictionaries[locale];
 ---
 
-<BaseLayout t={t}>
+<BaseLayout locale={locale} t={t.meta}>
+  <LanguageSwitcher current={locale} label={t.languageSwitcher.label} />
   <main>
     <Hero t={t.hero} />
     <Problem t={t.problem} />

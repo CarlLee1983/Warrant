@@ -4,7 +4,8 @@ import { installCommands } from './readmeInstall';
 const repo = 'https://github.com/CarlLee1983/Warrant';
 
 export const en: Dictionary = {
-  lang: 'en',
+  localeName: 'English',
+  languageSwitcher: { label: 'Language' },
   meta: {
     title: 'Warrant — human-approved intent, evidence-proven completion',
     description:
