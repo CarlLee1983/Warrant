@@ -49,3 +49,7 @@ Directories under `specs/stories/` are legacy records, not pending work.
   `CONTEXT.md` and `docs/adr/` are written in Traditional Chinese; the skill,
   block, and Story template in English. `docs/agents.md` is written in English
   only and is not translated.
+- `.github/workflows/release.yml` attaches `docs/agents.md` and
+  `plugin/skills/warrant/agents-block.md` to every published release as
+  `agents.md` and `agents-block.md`. The install prompt reads both from the
+  latest release, so removing or changing that workflow breaks the prompt.

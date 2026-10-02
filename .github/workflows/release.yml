@@ -1,0 +1,26 @@
+name: release
+
+# The install prompt reads these two files from the latest release, so every
+# published release must carry them. See AGENTS.md, Local constraints.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+      - name: Attach install prompt files
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: >-
+          gh release upload "$TAG" docs/agents.md plugin/skills/warrant/agents-block.md
+          --clobber --repo "$GITHUB_REPOSITORY"

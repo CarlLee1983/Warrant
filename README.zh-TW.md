@@ -29,11 +29,11 @@ Warrant 不決定「做哪件工作」，也不規範人如何審查。強制力
 
 其他 agent（Codex、Cursor、Copilot、Gemini CLI 等）：見 [docs/agents.md](docs/agents.md)。
 
-想讓 agent 自行安裝 Warrant，就把下面這段 Prompt 貼給它，並把佔位字換成你的驗證指令。agent 會遵循從本 repo `main` 分支即時取得的指示；commit 前請審查它列出的檔案。
+想讓 agent 自行安裝 Warrant，就把下面這段 Prompt 貼給它，並把佔位字換成你的驗證指令。agent 會遵循本 repo 最新 release 所附的指示；commit 前請審查它列出的檔案。
 
 ```text
 Install Warrant (https://github.com/CarlLee1983/Warrant) in this repository.
-Read https://raw.githubusercontent.com/CarlLee1983/Warrant/main/docs/agents.md
+Read https://github.com/CarlLee1983/Warrant/releases/latest/download/agents.md
 and follow its "Instructions for agents" section exactly.
 Verification command: <verification command>
 ```
