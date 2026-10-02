@@ -27,7 +27,16 @@ Warrant 不決定「做哪件工作」，也不規範人如何審查。強制力
 2. 讓該驗證指令在 CI 的每個 PR 上執行。Warrant 不強制這一點，但規則二的強制力靠它。
 3. 以 [`plugin/skills/warrant/story-template.md`](plugin/skills/warrant/story-template.md) 為形狀，在 `specs/stories/` 下寫 Story。
 
-非 Claude 的 agent 只需要第 1 步的區塊。
+其他 agent（Codex、Cursor、Copilot、Gemini CLI 等）：見 [docs/agents.md](docs/agents.md)。
+
+想讓 agent 自行安裝 Warrant，就把下面這段 Prompt 貼給它，並把佔位字換成你的驗證指令。agent 會遵循從本 repo `main` 分支即時取得的指示；commit 前請審查它列出的檔案。
+
+```text
+Install Warrant (https://github.com/CarlLee1983/Warrant) in this repository.
+Read https://raw.githubusercontent.com/CarlLee1983/Warrant/main/docs/agents.md
+and follow its "Instructions for agents" section exactly.
+Verification command: <verification command>
+```
 
 從 PraxisBound 遷移：刪除 PraxisBound 安裝的協定檔案與標記檔，改貼 Warrant 區塊。既有的目錄形式 Story 原樣保留，視為歷史紀錄。
 

@@ -84,10 +84,14 @@ export const ja: Dictionary = {
       { title: 'プラグインをインストール', body: 'Claude Code で 2 つのコマンドを実行（上記）。' },
       {
         title: 'ブロックを貼り、検証コマンドを宣言する',
-        body: 'agents-block.md を AGENTS.md に貼り付け、唯一の検証コマンドを記入します。そのコマンドをすべての pull request の CI で実行してください。Claude 以外のエージェントはこのステップだけで十分です。',
+        body: 'agents-block.md を AGENTS.md に貼り付け、唯一の検証コマンドを記入します。そのコマンドをすべての pull request の CI で実行してください。',
         link: {
           label: 'agents-block.md',
           href: `${repo}/blob/main/plugin/skills/warrant/agents-block.md`,
+        },
+        otherAgents: {
+          label: '他のエージェントを使う場合はガイドへ（英語）',
+          href: `${repo}/blob/main/docs/agents.md`,
         },
       },
     ],

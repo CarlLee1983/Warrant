@@ -27,7 +27,16 @@ Warrant は「どの作業をするか」を決めず、人間のレビュー方
 2. その検証コマンドを CI ですべての PR に対して実行します。Warrant はこれを強制しませんが、ルール 2 の強制力はこれに依存します。
 3. [`plugin/skills/warrant/story-template.md`](plugin/skills/warrant/story-template.md) の形に沿って、`specs/stories/` の下に Story を書きます。
 
-Claude 以外のエージェントに必要なのは、手順 1 のブロックだけです。
+その他のエージェント（Codex、Cursor、Copilot、Gemini CLI など）：[docs/agents.md](docs/agents.md) を参照してください。
+
+エージェント自身に Warrant をインストールさせるには、次のプロンプトを貼り付け、プレースホルダーを検証コマンドに置き換えてください。エージェントはこのリポジトリの `main` ブランチから取得した手順に従うので、コミットする前に、エージェントが一覧にしたファイルを確認してください。
+
+```text
+Install Warrant (https://github.com/CarlLee1983/Warrant) in this repository.
+Read https://raw.githubusercontent.com/CarlLee1983/Warrant/main/docs/agents.md
+and follow its "Instructions for agents" section exactly.
+Verification command: <verification command>
+```
 
 PraxisBound からの移行：PraxisBound がインストールしたプロトコルファイルとマーカーファイルを削除し、代わりに Warrant のブロックを貼り付けます。既存のディレクトリ形式の Story はそのまま残し、過去の記録として扱います。
 

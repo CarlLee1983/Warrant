@@ -81,10 +81,14 @@ export const zhTw: Dictionary = {
       { title: '安裝 plugin', body: '在 Claude Code 輸入兩條指令（見上方）。' },
       {
         title: '貼上區塊，宣告你的驗證指令',
-        body: '把 agents-block.md 貼進你的 AGENTS.md，填入唯一的驗證指令，並在每個 pull request 的 CI 執行它。Claude 以外的 agent 只需要這一步。',
+        body: '把 agents-block.md 貼進你的 AGENTS.md，填入唯一的驗證指令，並在每個 pull request 的 CI 執行它。',
         link: {
           label: 'agents-block.md',
           href: `${repo}/blob/main/plugin/skills/warrant/agents-block.md`,
+        },
+        otherAgents: {
+          label: '使用其他 agent？請見說明（英文）',
+          href: `${repo}/blob/main/docs/agents.md`,
         },
       },
     ],

@@ -31,7 +31,7 @@ export type Dictionary = {
   };
   adopt: {
     title: string;
-    steps: [Item, Item & { link: Link }];
+    steps: [Item, Item & { link: Link; otherAgents: Link }];
     guide: Link;
   };
   why: { title: string; body: string; link: Link; imageAlt: string };

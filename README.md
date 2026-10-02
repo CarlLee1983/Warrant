@@ -27,7 +27,16 @@ Warrant does not decide which work to do, and it does not prescribe how humans r
 2. Run that verification command in CI on every PR. Warrant does not enforce this, but enforcement of rule 2 depends on it.
 3. Write Stories under `specs/stories/`, shaped like [`plugin/skills/warrant/story-template.md`](plugin/skills/warrant/story-template.md).
 
-Agents other than Claude need only the block from step 1.
+Other agents (Codex, Cursor, Copilot, Gemini CLI and more): see [docs/agents.md](docs/agents.md).
+
+To let your agent install Warrant itself, paste this prompt and replace the placeholder with your verification command. Your agent will follow instructions fetched from this repository's `main` branch; review the files it lists before you commit them.
+
+```text
+Install Warrant (https://github.com/CarlLee1983/Warrant) in this repository.
+Read https://raw.githubusercontent.com/CarlLee1983/Warrant/main/docs/agents.md
+and follow its "Instructions for agents" section exactly.
+Verification command: <verification command>
+```
 
 Migrating from PraxisBound: delete the protocol files and marker files PraxisBound installed, and paste the Warrant block instead. Existing directory-style Stories stay as they are and are treated as historical records.
 

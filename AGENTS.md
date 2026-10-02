@@ -47,4 +47,5 @@ Directories under `specs/stories/` are legacy records, not pending work.
   the version changes. `README.md` is written in English; `README.zh-TW.md`
   and `README.ja.md` are its translations and change together with it.
   `CONTEXT.md` and `docs/adr/` are written in Traditional Chinese; the skill,
-  block, and Story template in English.
+  block, and Story template in English. `docs/agents.md` is written in English
+  only and is not translated.
