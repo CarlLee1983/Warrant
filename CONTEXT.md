@@ -39,3 +39,7 @@ _Avoid_: 大致完成、基本完成
 **歷史 Story**（Legacy Story）：
 PraxisBound 留下的目錄形式 Story，只作紀錄，不是待辦工作。
 _Avoid_: 舊工作、未完成 Story
+
+**推廣站**（Project Site）：
+以英、繁中、日三種語言向開發者介紹 Warrant 的公開網頁；它是專案的行銷資產，不是採用端會取得的規則，因此不受「只發佈規則」的限制。
+_Avoid_: 官網、文件站、docs
