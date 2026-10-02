@@ -1,0 +1,67 @@
+---
+import { dictionaries, locales } from '../i18n';
+import type { Locale } from '../i18n/types';
+import { localeMeta, pagePath } from '../i18n/urls';
+
+interface Props {
+  current: Locale;
+  label: string;
+}
+
+const { current, label } = Astro.props;
+---
+
+<header>
+  <nav aria-label={label}>
+    <ul>
+      {
+        locales.map((locale) => (
+          <li>
+            <a
+              href={pagePath(locale)}
+              lang={localeMeta[locale].lang}
+              hreflang={localeMeta[locale].lang}
+              aria-current={locale === current ? 'page' : undefined}
+            >
+              {dictionaries[locale].localeName}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<style>
+  header {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 1rem 1.5rem 0;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.25rem 1rem;
+    font: 0.8125rem/1.6 var(--mono);
+  }
+  a {
+    display: inline-block;
+    padding-block: 0.125rem;
+    color: var(--graphite);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  a[aria-current='page'] {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 0.2em;
+  }
+</style>

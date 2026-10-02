@@ -175,3 +175,35 @@ code,
     transition: color 0.15s, filter 0.15s;
   }
 }
+
+:lang(zh-Hant-TW) {
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Songti TC', 'Noto Serif TC', 'PMingLiU', serif;
+}
+
+:lang(ja) {
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', sans-serif;
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Hiragino Mincho ProN', 'Noto Serif JP', 'Yu Mincho', serif;
+  word-break: auto-phrase;
+}
+
+:lang(zh-Hant-TW),
+:lang(ja) {
+  line-break: strict;
+}
+
+:lang(zh-Hant-TW) h1,
+:lang(ja) h1 {
+  font-size: clamp(1.75rem, 6vw, 3.1rem);
+}
+
+:lang(zh-Hant-TW) h1,
+:lang(zh-Hant-TW) h2,
+:lang(ja) h1,
+:lang(ja) h2 {
+  text-wrap: balance;
+}
+
+:lang(ja) h1 {
+  font-size: clamp(1.75rem, 6vw, 2.6rem);
+}
