@@ -21,13 +21,20 @@ Warrant does not decide which work to do, and it does not prescribe how humans r
 /plugin install warrant@warrant
 ```
 
+## Install (Codex)
+
+```text
+codex plugin marketplace add CarlLee1983/Warrant
+codex plugin add warrant@warrant
+```
+
 ## Adopt
 
 1. Paste [`plugin/skills/warrant/agents-block.md`](plugin/skills/warrant/agents-block.md) into your repository's `AGENTS.md` and fill in the single verification command.
 2. Run that verification command in CI on every PR. Warrant does not enforce this, but enforcement of rule 2 depends on it.
 3. Write Stories under `specs/stories/`, shaped like [`plugin/skills/warrant/story-template.md`](plugin/skills/warrant/story-template.md).
 
-Other agents (Codex, Cursor, Copilot, Gemini CLI and more): see [docs/agents.md](docs/agents.md).
+Other agents (Cursor, Copilot, Gemini CLI and more): see [docs/agents.md](docs/agents.md).
 
 To let your agent install Warrant itself, paste this prompt and replace the placeholder with your verification command. Your agent will follow instructions attached to this repository's latest release; review the files it lists before you commit them.
 

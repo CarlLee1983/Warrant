@@ -21,13 +21,20 @@ Warrant は「どの作業をするか」を決めず、人間のレビュー方
 /plugin install warrant@warrant
 ```
 
+## インストール（Codex）
+
+```text
+codex plugin marketplace add CarlLee1983/Warrant
+codex plugin add warrant@warrant
+```
+
 ## 導入
 
 1. [`plugin/skills/warrant/agents-block.md`](plugin/skills/warrant/agents-block.md) をリポジトリの `AGENTS.md` に貼り付け、唯一の検証コマンドを記入します。
 2. その検証コマンドを CI ですべての PR に対して実行します。Warrant はこれを強制しませんが、ルール 2 の強制力はこれに依存します。
 3. [`plugin/skills/warrant/story-template.md`](plugin/skills/warrant/story-template.md) の形に沿って、`specs/stories/` の下に Story を書きます。
 
-その他のエージェント（Codex、Cursor、Copilot、Gemini CLI など）：[docs/agents.md](docs/agents.md) を参照してください。
+その他のエージェント（Cursor、Copilot、Gemini CLI など）：[docs/agents.md](docs/agents.md) を参照してください。
 
 エージェント自身に Warrant をインストールさせるには、次のプロンプトを貼り付け、プレースホルダーを検証コマンドに置き換えてください。エージェントはこのリポジトリの最新リリースに添付された手順に従うので、コミットする前に、エージェントが一覧にしたファイルを確認してください。
 
