@@ -1,0 +1,60 @@
+---
+import type { Dictionary } from '../i18n/types';
+
+interface Props {
+  t: Dictionary['adopt'];
+}
+
+const { t } = Astro.props;
+const [install, paste] = t.steps;
+---
+
+<section id="adopt">
+  <h2>{t.title}</h2>
+  <ol>
+    <li>
+      <h3>{install.title}</h3>
+      <p>{install.body}</p>
+    </li>
+    <li>
+      <h3>{paste.title}</h3>
+      <p>{paste.body}</p>
+      <p><a class="mono" href={paste.link.href}>{paste.link.label}</a></p>
+    </li>
+  </ol>
+  <p><a class="btn" href={t.guide.href}>{t.guide.label}</a></p>
+</section>
+
+<style>
+  ol {
+    list-style: none;
+    margin: 2rem 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    counter-reset: step;
+    max-width: 40rem;
+  }
+  li {
+    counter-increment: step;
+    padding-left: 3rem;
+    position: relative;
+  }
+  li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--btn-bg);
+    color: var(--btn-ink);
+    font: 600 0.9375rem/2rem var(--mono);
+    text-align: center;
+  }
+  h3 {
+    margin-bottom: 0.25rem;
+  }
+</style>

@@ -2,7 +2,7 @@
 
 **English** | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md)
 
-Warrant bounds an AI agent's work by human-approved intent, proves completion with the repository's own verification, and hands the result to a human for review. It ships rules only: one Claude Code skill, one `AGENTS.md` block you can paste into any agent's setup, and one Story template. No scripts, CLI, or packages.
+Warrant bounds an AI agent's work by human-approved intent, proves completion with the repository's own verification, and hands the result to a human for review. It ships rules only: one Claude Code skill, one `AGENTS.md` block you can paste into any agent's setup, and one Story template. No scripts, CLI, or packages. Website: [carllee1983.github.io/Warrant](https://carllee1983.github.io/Warrant/).
 
 ## Three rules
 

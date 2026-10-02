@@ -1,0 +1,149 @@
+---
+import type { Dictionary } from '../i18n/types';
+
+interface Props {
+  t: Dictionary['flow'];
+}
+
+const { t } = Astro.props;
+// One viewBox unit is 1px at a 16px root, so the diagram width and the caption
+// row height below stay in step with the node pitch.
+const pitch = 120;
+const nodeHeight = 64;
+const width = 256;
+const height = pitch * (t.nodes.length - 1) + nodeHeight;
+---
+
+<section id="flow">
+  <h2>{t.title}</h2>
+  <div class="flow">
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      role="img"
+      aria-label={t.diagramLabel}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <marker
+          id="arrow"
+          viewBox="0 0 10 10"
+          refX="8"
+          refY="5"
+          markerWidth="8"
+          markerHeight="8"
+          orient="auto"
+        >
+          <path d="M0 0 L10 5 L0 10 z" class="head"></path>
+        </marker>
+      </defs>
+      {
+        t.nodes.map((node, i) => (
+          <g>
+            <rect
+              x="1"
+              y={i * pitch + 1}
+              width={width - 2}
+              height={nodeHeight - 2}
+              rx="4"
+              class={i === t.nodes.length - 1 ? 'node node-final' : 'node'}
+            />
+            <text
+              x={width / 2}
+              y={i * pitch + nodeHeight / 2}
+              text-anchor="middle"
+              dominant-baseline="middle"
+              class="label"
+            >
+              {node.title}
+            </text>
+            {i < t.nodes.length - 1 && (
+              <line
+                x1={width / 2}
+                y1={i * pitch + nodeHeight + 6}
+                x2={width / 2}
+                y2={(i + 1) * pitch - 6}
+                class="edge"
+                marker-end="url(#arrow)"
+              />
+            )}
+          </g>
+        ))
+      }
+    </svg>
+    <ol>
+      {
+        t.nodes.map((node) => (
+          <li>
+            <h3>{node.title}</h3>
+            <p>{node.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  svg {
+    display: block;
+    width: 16rem;
+    max-width: 100%;
+    height: auto;
+    color: var(--ink);
+  }
+  .node {
+    fill: var(--surface);
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+  .node-final {
+    stroke: var(--accent);
+  }
+  .label {
+    fill: currentColor;
+    font: 15px var(--mono);
+  }
+  .edge {
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+  .head {
+    fill: currentColor;
+  }
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    margin-bottom: 1.25rem;
+  }
+  h3 {
+    margin-bottom: 0.25rem;
+  }
+  p {
+    color: var(--graphite);
+    margin: 0;
+  }
+  @media (min-width: 48rem) {
+    .flow {
+      grid-template-columns: 16rem minmax(0, 1fr);
+      gap: 3rem;
+    }
+    li {
+      height: 7.5rem;
+      margin: 0;
+      padding-top: 1.1rem;
+      /* Align the first line with the node it describes. */
+    }
+    li:last-child {
+      height: auto;
+    }
+  }
+</style>

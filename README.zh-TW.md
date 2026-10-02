@@ -2,7 +2,7 @@
 
 [English](README.md) | **繁體中文** | [日本語](README.ja.md)
 
-Warrant 讓 AI agent 的工作以人核准的意圖為界線，以 repo 自己的驗證結果證明完成，最後交給人審查。它只有規則：一份 Claude Code skill、一段可貼進任何 agent 的 `AGENTS.md` 區塊、一份 Story 模板。沒有腳本、CLI 或套件。
+Warrant 讓 AI agent 的工作以人核准的意圖為界線，以 repo 自己的驗證結果證明完成，最後交給人審查。它只有規則：一份 Claude Code skill、一段可貼進任何 agent 的 `AGENTS.md` 區塊、一份 Story 模板。沒有腳本、CLI 或套件。網站：[carllee1983.github.io/Warrant](https://carllee1983.github.io/Warrant/)。
 
 ## 三條規則
 

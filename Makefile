@@ -1,6 +1,6 @@
-.PHONY: verify readme-sync eval
+.PHONY: verify readme-sync site eval
 
-verify: readme-sync
+verify: readme-sync site
 	claude plugin validate --strict .
 	claude plugin validate --strict plugin/.claude-plugin/plugin.json
 	claude plugin validate --strict plugin/skills
@@ -37,6 +37,13 @@ readme-sync:
 		done; \
 	done; \
 	rm -rf "$$tmp"; exit $$status
+
+# Project site (site/): a clean install, type check, then a production build.
+# The build output is the completion evidence; site/dist is git ignored.
+site:
+	npm --prefix site ci
+	npm --prefix site run check
+	npm --prefix site run build
 
 # Behaviour eval suite. Needs Claude Code credentials and costs money; never
 # run in CI. `claude plugin eval` only reads cases below the plugin it tests,

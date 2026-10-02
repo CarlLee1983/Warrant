@@ -1,0 +1,31 @@
+---
+import type { Dictionary } from '../i18n/types';
+
+interface Props {
+  t: Dictionary['footer'];
+}
+
+const { t } = Astro.props;
+---
+
+<footer id="footer">
+  <ul>
+    {t.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+  </ul>
+</footer>
+
+<style>
+  footer {
+    padding-bottom: 3rem;
+  }
+  ul {
+    border-top: 1px solid var(--rule);
+    list-style: none;
+    margin: 0;
+    padding: 2rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font: 0.875rem/1.6 var(--mono);
+  }
+</style>

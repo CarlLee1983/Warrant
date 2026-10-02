@@ -1,0 +1,101 @@
+---
+interface Props {
+  label: string;
+  commands: readonly string[];
+  copy: string;
+  copied: string;
+}
+
+const { label, commands, copy, copied } = Astro.props;
+---
+
+<div class="install">
+  <p class="mono install-label">{label}</p>
+  <div class="install-box">
+    <pre><code data-install>{commands.join('\n')}</code></pre>
+    <button
+      type="button"
+      class="copy"
+      data-copy={commands.join('\n')}
+      data-label={copy}
+      data-copied={copied}>{copy}</button
+    >
+    <span class="sr-only" role="status" aria-live="polite" data-status></span>
+  </div>
+</div>
+
+<script>
+  const status = document.querySelector<HTMLElement>('[data-status]');
+  let timer: ReturnType<typeof setTimeout> | undefined;
+
+  document.querySelectorAll<HTMLButtonElement>('button.copy').forEach((button) => {
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? '');
+      } catch {
+        const code = button.parentElement?.querySelector('code');
+        if (code) {
+          window.getSelection()?.selectAllChildren(code);
+        }
+        return;
+      }
+      button.textContent = button.dataset.copied ?? '';
+      if (status) status.textContent = button.dataset.copied ?? '';
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        button.textContent = button.dataset.label ?? '';
+        if (status) status.textContent = '';
+      }, 2000);
+    });
+  });
+</script>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .install {
+    margin-top: 2rem;
+    max-width: 36rem;
+  }
+  .install-label {
+    font-size: 0.8125rem;
+    color: var(--graphite);
+    margin: 0 0 0.5rem;
+  }
+  .install-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 0.375rem;
+  }
+  pre {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    overflow-x: auto;
+    font: 0.875rem/1.7 var(--mono);
+  }
+  .copy {
+    flex: none;
+    padding: 0.3rem 0.75rem;
+    font: 600 0.8125rem/1.4 var(--mono);
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--graphite);
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+  .copy:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+</style>
