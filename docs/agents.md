@@ -36,20 +36,26 @@ in. Follow these steps in order and stop where a step says so.
    empty, or still the placeholder `<verification command>`, stop and ask the
    human for it. Do not choose, guess, or infer one from the repository: the
    verification command decides when work is done, and only a human may set it.
-2. Fetch the block from
+2. Download the raw block from
    <https://raw.githubusercontent.com/CarlLee1983/Warrant/main/plugin/skills/warrant/agents-block.md>
-   and replace the placeholder on its `**Verification command:**` line with the
-   human's command, in backticks.
+   with a tool that returns the file unmodified (for example `curl -fsSL`).
+   Copy it byte for byte: do not summarise, reformat, or translate it. Change
+   only the text between the backticks on the `**Verification command:**`
+   line, replacing it with the human's command.
 3. If `AGENTS.md` does not exist at the repository root, create it with the
-   block. If it exists and already contains a `## Warrant` section, stop and
-   report that Warrant is already installed. Otherwise append the block to the
-   end of the file after one blank line, and leave every existing line
-   unchanged.
+   block. If it exists and already contains the line
+   `This repository follows Warrant.` or a heading whose text is `Warrant`,
+   stop and report that Warrant is already installed; do not add the block
+   again. Otherwise append the block to the end of the file after
+   one blank line, and leave every existing line unchanged.
 4. Apply the step for the agent you are, from
    [Agents with extra steps](#agents-with-extra-steps): for example add
-   `AGENTS.md` to Gemini CLI's `context.fileName`, add `read: AGENTS.md` for
-   Aider, or check for files that would shadow `AGENTS.md` in Zed or JetBrains
-   Junie and report them.
+   `AGENTS.md` to Gemini CLI's `context.fileName`, or add `read: AGENTS.md` for
+   Aider. If the configuration file already exists, merge into it: add
+   `AGENTS.md` to the existing list and leave every other key unchanged; create
+   the file only if it does not exist. For files that shadow `AGENTS.md` (Zed,
+   JetBrains Junie, or a nested `AGENTS.md`), only list them and explain the
+   effect. Never delete, move, or edit them: that is the human's decision.
 5. Do not run commands that change the human's global configuration, such as
    installing a plugin. If your agent has a plugin route (Claude Code, Codex),
    list those commands for the human to run.
@@ -80,6 +86,12 @@ Cursor, GitHub Copilot, Windsurf, Cline, Amp, and opencode read `AGENTS.md`
 from the repository root without any setting. Paste the block, fill in the
 verification command, and run that command in CI on every pull request.
 
+In a monorepo, a nested `AGENTS.md` can take precedence over the root one for
+files below it; GitHub Copilot, for example, uses the
+[nearest `AGENTS.md`](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions)
+in the directory tree. Put the block in each nested `AGENTS.md` too, or keep
+nested files free of conflicting rules.
+
 ## Agents with extra steps
 
 ### Claude Code
@@ -97,8 +109,8 @@ codex plugin marketplace add CarlLee1983/Warrant
 codex plugin add warrant@warrant
 ```
 
-Then paste the block into `AGENTS.md` as for any other agent. Installed copies
-refresh when the plugin `version` changes.
+Then paste the block into `AGENTS.md` as for any other agent. To pick up a newer
+release, run `codex plugin marketplace upgrade` and reinstall the plugin.
 
 ### Gemini CLI
 
@@ -127,13 +139,15 @@ read: AGENTS.md
 Zed reads only the first instruction file it finds, in this order: `.rules`,
 `.cursorrules`, `.windsurfrules`, `.clinerules`, `.github/copilot-instructions.md`,
 `AGENT.md`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`. If any file earlier in that
-list exists, Zed never reads `AGENTS.md` and the block has no effect. Remove the
-earlier file or move its content into `AGENTS.md`.
+list exists, Zed never reads `AGENTS.md` and the block has no effect. Decide
+whether to merge that file into `AGENTS.md` or to paste the block into it.
 
 ### JetBrains Junie
 
 If `.junie/AGENTS.md` exists, Junie uses it instead of the root `AGENTS.md`, and
-the block has no effect. Remove `.junie/AGENTS.md` or put the block there.
+the block has no effect. Junie can create that file on first start by offering
+to import other agents' instructions. Paste the block into `.junie/AGENTS.md`
+as well, or merge it back into the root file.
 
 ## Optional: install the skill
 
@@ -149,21 +163,24 @@ cp -R path/to/Warrant/plugin/skills/warrant .agents/skills/warrant
 Copy the whole directory, not only `SKILL.md`: the skill refers to
 `agents-block.md` and `story-template.md` next to it. Cline does not read
 `.agents/skills/`; use `.cline/skills/`, `.clinerules/skills/`, or
-`.claude/skills/` instead. Claude Code and Codex get the skill from the plugin
+`.claude/skills/` instead ([Cline skills](https://docs.cline.bot/customization/skills)). Claude Code and Codex get the skill from the plugin
 and need no copy.
 
 ## How the tested rows were checked
 
 In an empty Git repository, create `AGENTS.md` from the block with the
-verification command filled in as `make verify-warrant-7f3a`. Then ask each agent
-non-interactively from the repository root, and check that the answer contains
-`make verify-warrant-7f3a`:
+verification command filled in as `make verify-warrant-7f3a`. Then, from the
+repository root, check that each agent has the block in its context before it
+uses any tool:
 
 ```sh
 Q="What is this repository's verification command? Reply with the command only."
-claude -p "$Q"
-codex exec --skip-git-repo-check -s read-only "$Q"
+claude -p "$Q" --setting-sources project --disallowedTools Read Grep Glob Bash WebFetch Task
+codex debug prompt-input "$Q" | grep -c 'make verify-warrant-7f3a'
 ```
 
-The token appears nowhere except in `AGENTS.md`, so a correct answer means the
-agent read the block.
+Claude Code runs with file tools disabled and without user settings or plugins,
+so it can only answer from instructions it loaded on start. `codex debug
+prompt-input` prints the context Codex sends to the model. The token appears
+nowhere except in `AGENTS.md`, so a correct answer, or a count of at least 1,
+means the agent loaded the block automatically.

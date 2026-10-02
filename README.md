@@ -29,7 +29,7 @@ Warrant does not decide which work to do, and it does not prescribe how humans r
 
 Other agents (Codex, Cursor, Copilot, Gemini CLI and more): see [docs/agents.md](docs/agents.md).
 
-To let your agent install Warrant itself, paste this prompt and replace the placeholder with your verification command:
+To let your agent install Warrant itself, paste this prompt and replace the placeholder with your verification command. Your agent will follow instructions fetched from this repository's `main` branch; review the files it lists before you commit them.
 
 ```text
 Install Warrant (https://github.com/CarlLee1983/Warrant) in this repository.

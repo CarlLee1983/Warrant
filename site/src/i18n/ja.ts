@@ -90,7 +90,7 @@ export const ja: Dictionary = {
           href: `${repo}/blob/main/plugin/skills/warrant/agents-block.md`,
         },
         otherAgents: {
-          label: '他のエージェントを使う場合はガイドへ',
+          label: '他のエージェントを使う場合はガイドへ（英語）',
           href: `${repo}/blob/main/docs/agents.md`,
         },
       },

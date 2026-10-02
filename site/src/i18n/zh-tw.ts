@@ -87,7 +87,7 @@ export const zhTw: Dictionary = {
           href: `${repo}/blob/main/plugin/skills/warrant/agents-block.md`,
         },
         otherAgents: {
-          label: '使用其他 agent？看說明',
+          label: '使用其他 agent？請見說明（英文）',
           href: `${repo}/blob/main/docs/agents.md`,
         },
       },
