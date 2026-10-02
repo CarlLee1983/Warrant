@@ -53,7 +53,7 @@ plugin 本體放在 `plugin/`，marketplace 只指向它，所以安裝內容不
 make eval
 ```
 
-以 `claude plugin eval` 執行 `evals/cases/` 下的九個情境，每個情境跑三次，三次至少兩次通過才算過。它使用你的 Claude Code 憑證，每次執行都會產生模型費用（上限 USD 10），因此不在 CI 執行，也不屬於 `make verify`。結果寫在 `evals/results/`，已被 git 忽略。
+以 `claude plugin eval` 執行 `evals/cases/` 下的九個情境，每個情境跑三次，三次至少兩次通過才算過。它使用你的 Claude Code 憑證，每次執行都會產生模型費用，因此不在 CI 執行，也不屬於 `make verify`。USD 10 是整次 `make eval`（全部情境與重複次數合計）的費用上限；上限在每個 run 啟動前檢查，所以實際費用最多會多出當下執行中的 run（最多 3 個）；觸及上限時會中止並回報部分結果，exit code 為 2。結果寫在 `evals/results/`，已被 git 忽略。
 
 每個情境的 fixture 都以受測 plugin 的 `skills/warrant/agents-block.md` 產生 `AGENTS.md`，只填入驗證指令。`evals/mutant/` 是反向指示的 plugin 副本：它的 skill 與區塊把「停下等核准」「範圍衝突要停」「推論不算觀察」三條規則改寫成相反的明確指示，其餘與 `plugin/` 相同，用來證明 grader 能分辨對錯：
 
