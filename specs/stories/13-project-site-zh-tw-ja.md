@@ -20,7 +20,7 @@
 1. `site/src/i18n/` 下有繁中與日文字典，型別與英文字典相同；`npm --prefix site run check` 通過。拿掉任一字典中的任一 key 後，check 會失敗。
 2. `site/dist/zh-tw/index.html` 的 `<html>` 帶有 `lang="zh-Hant-TW"`，`site/dist/ja/index.html` 帶有 `lang="ja"`。
 3. 這兩頁與 `site/dist/index.html` 的段落 id 序列相同：以 Story 12 第 4 條的 `grep` 分別抽出後兩兩 `diff`，無輸出。
-4. 這兩頁顯示的安裝指令與 `README.md` 第 19–20 行完全相同。
+4. 這兩頁顯示的安裝指令與 `README.md` 中 `## Install (Claude Code)` 下方程式碼區塊內的兩行完全相同。
 5. 三個語系頁各有四個 `<link rel="alternate">`，`hreflang` 分別為 `en`、`zh-Hant-TW`、`ja`、`x-default`，指向對應頁的絕對網址；`x-default` 指向 `https://carllee1983.github.io/Warrant/`。
 6. 三個語系頁的頁首都有語言切換器，連到三個語系頁；目前所在的語系帶有 `aria-current="page"`。
 7. `grep -rEn 'navigator\.language|Accept-Language' site/src site/dist` 無輸出。

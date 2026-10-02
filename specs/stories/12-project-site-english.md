@@ -26,7 +26,7 @@
 3. 頁面上所有給讀者看的文字（含圖片 `alt` 與流程圖節點標籤）都來自 `site/src/i18n/` 下的英文字典，字典的型別由一個共用型別定義。拿掉英文字典中任一 key 後，`npm --prefix site run check` 會失敗；把 key 放回去後則通過。
 4. `site/dist/index.html` 的 `<html>` 帶有 `lang="en"`；其主要段落依序帶有以下 id：`hero`、`problem`、`rules`、`flow`、`adopt`、`why`、`footer`。檢查方式：`grep -oE 'id="(hero|problem|rules|flow|adopt|why|footer)"' site/dist/index.html` 依序輸出這七個。
 5. `#hero` 的 `<h1>` 文字為 `Your agent says it's done. Prove it.`，副標為 `Human-approved intent, evidence-proven completion.`。
-6. `#hero` 顯示的安裝指令與 `README.md` 第 19–20 行的兩行完全相同。旁邊有一個按鈕，在瀏覽器中點擊後，剪貼簿內容即為這兩行（以 Playwright 觀察）。
+6. `#hero` 顯示的安裝指令與 `README.md` 中 `## Install (Claude Code)` 下方程式碼區塊內的兩行完全相同。旁邊有一個按鈕，在瀏覽器中點擊後，剪貼簿內容即為這兩行（以 Playwright 觀察）。
 7. `#hero` 有一個連到 `https://github.com/CarlLee1983/Warrant` 的主要 CTA。`#footer` 有連到該 repo、其 Releases 頁、其 `LICENSE` 的連結。
 8. `#rules` 列出與 `README.md` 第 9–11 行同名的三條規則。`#adopt` 列出兩步：安裝 plugin；把 `agents-block.md` 貼進 `AGENTS.md` 並宣告驗證指令。
 9. `#why` 明確寫出 skill 只是建議、agent 可能不理會，強制力來自採用端的 CI 與人工審查，並連到 GitHub 上的 `docs/adr/0001-enforcement-delegated-to-adopters.md`。
