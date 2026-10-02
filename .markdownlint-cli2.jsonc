@@ -4,5 +4,5 @@
     "MD041": false
   },
   "globs": ["**/*.md"],
-  "ignores": ["node_modules"]
+  "ignores": ["**/node_modules", "site/dist", "site/.astro"]
 }

@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import type { Dictionary } from '../i18n/types';
+import Adopt from './Adopt.astro';
+import Flow from './Flow.astro';
+import Footer from './Footer.astro';
+import Hero from './Hero.astro';
+import Problem from './Problem.astro';
+import Rules from './Rules.astro';
+import Why from './Why.astro';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+---
+
+<BaseLayout t={t}>
+  <main>
+    <Hero t={t.hero} />
+    <Problem t={t.problem} />
+    <Rules t={t.rules} />
+    <Flow t={t.flow} />
+    <Adopt t={t.adopt} />
+    <Why t={t.why} />
+  </main>
+  <Footer t={t.footer} />
+</BaseLayout>

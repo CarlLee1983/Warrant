@@ -1,0 +1,69 @@
+---
+import intent from '../assets/images/rule-intent.png';
+import evidence from '../assets/images/rule-evidence.png';
+import standard from '../assets/images/rule-standard.png';
+import type { Dictionary } from '../i18n/types';
+import Illustration from './Illustration.astro';
+
+interface Props {
+  t: Dictionary['rules'];
+}
+
+const { t } = Astro.props;
+const images = [intent, evidence, standard];
+---
+
+<section id="rules">
+  <h2>{t.title}</h2>
+  <ol>
+    {
+      t.items.map((item, i) => (
+        <li>
+          <Illustration
+            src={images[i]}
+            alt={item.imageAlt}
+            ratio="1 / 1"
+            sizes="(min-width: 48rem) 20rem, 100vw"
+            widths={[320, 640, 960]}
+          />
+          <p class="mono number" aria-hidden="true" />
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  ol {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    counter-reset: rule;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+  @media (min-width: 48rem) {
+    ol {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+  li {
+    counter-increment: rule;
+  }
+  .number::before {
+    content: counter(rule, decimal-leading-zero);
+  }
+  .number {
+    color: var(--accent);
+    font-size: 0.875rem;
+    margin: 1rem 0 0.25rem;
+  }
+  li p:last-child {
+    color: var(--graphite);
+    margin: 0;
+  }
+</style>

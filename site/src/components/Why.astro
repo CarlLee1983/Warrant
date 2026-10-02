@@ -1,0 +1,27 @@
+---
+import why from '../assets/images/why.png';
+import type { Dictionary } from '../i18n/types';
+import Illustration from './Illustration.astro';
+
+interface Props {
+  t: Dictionary['why'];
+}
+
+const { t } = Astro.props;
+---
+
+<section id="why">
+  <div class="split">
+    <div>
+      <h2>{t.title}</h2>
+      <p>{t.body}</p>
+      <p><a href={t.link.href}>{t.link.label}</a></p>
+    </div>
+    <Illustration
+      src={why}
+      alt={t.imageAlt}
+      ratio="3 / 2"
+      sizes="(min-width: 48rem) 28rem, 100vw"
+    />
+  </div>
+</section>

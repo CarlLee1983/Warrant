@@ -1,0 +1,56 @@
+---
+import hero from '../assets/images/hero.png';
+import type { Dictionary } from '../i18n/types';
+import Illustration from './Illustration.astro';
+import InstallBlock from './InstallBlock.astro';
+
+interface Props {
+  t: Dictionary['hero'];
+}
+
+const { t } = Astro.props;
+---
+
+<section id="hero">
+  <div class="split">
+    <div>
+      <h1>{t.title}</h1>
+      <p class="eyebrow">{t.subtitle}</p>
+      <p class="lede">{t.lede}</p>
+      <p class="actions">
+        <a class="btn btn-primary" href={t.primaryCta.href}>{t.primaryCta.label}</a>
+        <a class="btn" href={t.secondaryCta.href}>{t.secondaryCta.label}</a>
+      </p>
+      <InstallBlock
+        label={t.installLabel}
+        commands={t.installCommands}
+        copy={t.copy}
+        copied={t.copied}
+      />
+    </div>
+    <Illustration
+      src={hero}
+      alt={t.imageAlt}
+      ratio="3 / 2"
+      eager
+      sizes="(min-width: 48rem) 28rem, 100vw"
+    />
+  </div>
+</section>
+
+<style>
+  section {
+    padding-top: 3rem;
+  }
+  .eyebrow {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 1rem;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+</style>
