@@ -92,10 +92,14 @@ export const en: Dictionary = {
       { title: 'Install the plugin', body: 'Two commands in Claude Code (above).' },
       {
         title: 'Paste the block, declare your command',
-        body: 'Copy agents-block.md into your AGENTS.md and fill in the single verification command. Run that command in CI on every pull request. Agents other than Claude need only this step.',
+        body: 'Copy agents-block.md into your AGENTS.md and fill in the single verification command. Run that command in CI on every pull request.',
         link: {
           label: 'agents-block.md',
           href: `${repo}/blob/main/plugin/skills/warrant/agents-block.md`,
+        },
+        otherAgents: {
+          label: 'Using another agent? See the guide',
+          href: `${repo}/blob/main/docs/agents.md`,
         },
       },
     ],
