@@ -21,13 +21,20 @@ Warrant 不決定「做哪件工作」，也不規範人如何審查。強制力
 /plugin install warrant@warrant
 ```
 
+## 安裝（Codex）
+
+```text
+codex plugin marketplace add CarlLee1983/Warrant
+codex plugin add warrant@warrant
+```
+
 ## 採用
 
 1. 把 [`plugin/skills/warrant/agents-block.md`](plugin/skills/warrant/agents-block.md) 貼進 repo 的 `AGENTS.md`，填入唯一的驗證指令。
 2. 讓該驗證指令在 CI 的每個 PR 上執行。Warrant 不強制這一點，但規則二的強制力靠它。
 3. 以 [`plugin/skills/warrant/story-template.md`](plugin/skills/warrant/story-template.md) 為形狀，在 `specs/stories/` 下寫 Story。
 
-其他 agent（Codex、Cursor、Copilot、Gemini CLI 等）：見 [docs/agents.md](docs/agents.md)。
+其他 agent（Cursor、Copilot、Gemini CLI 等）：見 [docs/agents.md](docs/agents.md)。
 
 想讓 agent 自行安裝 Warrant，就把下面這段 Prompt 貼給它，並把佔位字換成你的驗證指令。agent 會遵循本 repo 最新 release 所附的指示；commit 前請審查它列出的檔案。
 
