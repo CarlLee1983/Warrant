@@ -9,13 +9,13 @@ export const en: Dictionary = {
   meta: {
     title: 'Warrant — human-approved intent, evidence-proven completion',
     description:
-      "Rules for AI coding agents: work starts from a Story a human approved, and is done only when your repository's own verification command proves it.",
+      "Rules for AI coding agents: human-approved intent and current-worktree completion proven by declared verification and acceptance evidence.",
     ogImageAlt: 'Warrant: human-approved intent, evidence-proven completion.',
   },
   hero: {
     title: "Your agent says it's done. Prove it.",
     subtitle: 'Human-approved intent, evidence-proven completion.',
-    lede: "Warrant is a set of rules for AI coding agents. Work starts from a Story a human approved; it is done only when your repository's own verification command says so — and every acceptance criterion maps to evidence.",
+    lede: "Warrant bounds work by a human-approved Story. Complete means current-worktree delivery is proven: declared verification, current-delivery criteria, and due follow-ups pass, with no known failed follow-up.",
     primaryCta: { label: 'View on GitHub', href: repo },
     secondaryCta: { label: 'Star on GitHub', href: repo },
     installLabel: 'Install in Claude Code',
@@ -54,7 +54,7 @@ export const en: Dictionary = {
       },
       {
         title: 'Completion is proven by evidence',
-        body: 'Done is decided by the one verification command your AGENTS.md declares. Every acceptance criterion maps to an observation: a command and its output, or a file:line.',
+        body: 'Run the AGENTS.md verification command on the final worktree. Every current-delivery criterion needs a passing observation covering staged, unstaged, and untracked changes before commit.',
         imageAlt:
           'Ledger lines tied by threads to receipts coming out of a terminal, under a magnifying glass.',
       },
@@ -73,7 +73,7 @@ export const en: Dictionary = {
     nodes: [
       {
         title: 'Story',
-        body: 'Goal, Out of Scope, Acceptance Criteria — committed by a human.',
+        body: "Goal, Out of Scope, Acceptance Criteria. Human approval separates worktree checks from genuinely later-stage follow-ups before implementation; no after-the-fact reclassification.",
       },
       { title: 'Agent work', body: "Inside the Story's scope, nothing more." },
       {
@@ -82,7 +82,7 @@ export const en: Dictionary = {
       },
       {
         title: 'Completion report',
-        body: 'Evidence per criterion, skipped checks, residual risks. Anything unproven is partial.',
+        body: "Evidence, skipped or blocked checks, residual risks, and a Warrant-Result line. Approved follow-ups not yet due may remain pending. Due checks without passing evidence mean partial; known failures require verification-failed. Complete does not prove commit, push, CI, merge, or deploy success.",
       },
     ],
   },
@@ -92,7 +92,7 @@ export const en: Dictionary = {
       { title: 'Install the plugin', body: 'Two commands in Claude Code (above).' },
       {
         title: 'Paste the block, declare your command',
-        body: 'Copy agents-block.md into your AGENTS.md and fill in the single verification command. Run that command in CI on every pull request.',
+        body: 'Copy agents-block.md into AGENTS.md, fill in the verification command, and run it in PR CI. The block includes core drafting and reporting checks without the optional skill. Plugin updates do not refresh pasted blocks or reapprove old Stories. Upgrade only the Warrant block, preserving your command and unrelated rules.',
         link: {
           label: 'agents-block.md',
           href: `${repo}/blob/main/plugin/skills/warrant/agents-block.md`,
@@ -107,7 +107,7 @@ export const en: Dictionary = {
   },
   why: {
     title: 'Rules, not tools',
-    body: 'Warrant ships no scripts, no CLI and no checker. A skill is advice — an agent can ignore it. What actually stops a bad change is your CI running the verification command and a human reading the completion report. Warrant gives that review a fixed shape: every criterion mapped to an observation, or the report says partial.',
+    body: "Warrant ships rules, not scripts, a CLI, or a checker. Enforcement comes from CI and human review. Missing current-delivery evidence, blocked verification, or user-skipped checks means partial. Structured result statistics make reasons countable, but are not causal evidence of improved quality.",
     link: {
       label: 'Why we chose this (ADR-0001)',
       href: `${repo}/blob/main/docs/adr/0001-enforcement-delegated-to-adopters.md`,

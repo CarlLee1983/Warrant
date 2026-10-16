@@ -9,13 +9,13 @@ export const zhTw: Dictionary = {
   meta: {
     title: 'Warrant — 人核准的意圖，以證據證明的完成',
     description:
-      '給 AI coding agent 的規則：工作從人核准的 Story 開始，只有 repo 自己的驗證指令證明了，才算完成。',
+      '給 AI coding agent 的規則：以人核准的意圖為界，由宣告的驗證指令與驗收證據證明當次工作樹交付完成。',
     ogImageAlt: 'Warrant：人核准的意圖，以證據證明的完成。',
   },
   hero: {
     title: '你的 agent 說做完了。拿出證據。',
     subtitle: '人核准的意圖，以證據證明的完成。',
-    lede: 'Warrant 是給 AI coding agent 的一套規則。工作從人核准的 Story 開始；只有 repo 自己的驗證指令說通過了才算完成，而且每條驗收條件都要對應到證據。',
+    lede: "Warrant 讓工作以人核准的 Story 為界。complete 只代表當次工作樹交付已獲證明：宣告指令、當次條件與已觸發的後續檢查均通過，且無已知失敗的後續檢查。",
     primaryCta: { label: '前往 GitHub', href: repo },
     secondaryCta: { label: '在 GitHub 加星', href: repo },
     installLabel: '在 Claude Code 安裝',
@@ -52,7 +52,7 @@ export const zhTw: Dictionary = {
       },
       {
         title: '完成由證據證明',
-        body: '完成與否只由 AGENTS.md 宣告的唯一驗證指令決定。每條驗收條件都要對應到一次觀察：一條指令和它的輸出，或一個 file:line。',
+        body: '在最終工作樹執行 AGENTS.md 宣告的驗證指令。每條當次交付條件須在 commit 前有通過觀察，涵蓋 staged、unstaged 與 untracked 變更。',
         imageAlt: '帳簿上的每一行以細線連到從終端機吐出的收據，上方有一支放大鏡。',
       },
       {
@@ -66,12 +66,12 @@ export const zhTw: Dictionary = {
     title: '一份 Story 怎麼走完',
     diagramLabel: '流程：Story、agent 工作、驗證指令、完成回報。',
     nodes: [
-      { title: 'Story', body: '目標、範圍外、驗收條件——由人 commit。' },
+      { title: 'Story', body: "目標、範圍外、驗收條件。實作前由人核准工作樹檢查與真正依賴後續階段的驗證分類，不得事後改列。" },
       { title: 'agent 工作', body: '只在 Story 的範圍內，不多做。' },
       { title: '驗證指令', body: 'AGENTS.md 宣告的那唯一一條指令。' },
       {
         title: '完成回報',
-        body: '每條驗收條件的證據、跳過的檢查、殘餘風險。任何一條沒證明，結論就是「部分完成」。',
+        body: "證據、跳過或受阻的檢查、殘餘風險，加上一行 Warrant-Result。已核准且未觸發的後續檢查可列 pending；已觸發但無通過證據為 partial，已知失敗須列 verification-failed。complete 不代表 commit、push、CI、merge 或 deploy 成功。",
       },
     ],
   },
@@ -81,7 +81,7 @@ export const zhTw: Dictionary = {
       { title: '安裝 plugin', body: '在 Claude Code 輸入兩條指令（見上方）。' },
       {
         title: '貼上區塊，宣告你的驗證指令',
-        body: '把 agents-block.md 貼進你的 AGENTS.md，填入唯一的驗證指令，並在每個 pull request 的 CI 執行它。',
+        body: '把 agents-block.md 貼進 AGENTS.md，填入驗證指令並在 PR CI 執行。區塊已含核心起草與回報檢查，不需載入可選的 skill。plugin 更新不會更新手貼區塊或重新核准舊 Story；升級只替換 Warrant 區塊，保留原有指令及其他規則。',
         link: {
           label: 'agents-block.md',
           href: `${repo}/blob/main/plugin/skills/warrant/agents-block.md`,
@@ -96,7 +96,7 @@ export const zhTw: Dictionary = {
   },
   why: {
     title: '是規則，不是工具',
-    body: 'Warrant 不發佈腳本、CLI 或檢查器。skill 只是建議，agent 可以不理會。真正擋下錯誤變更的，是你的 CI 執行驗證指令，以及讀完成回報的人。Warrant 讓這份審查有固定的形狀：每條驗收條件都對應到觀察，否則回報就寫「部分完成」。',
+    body: "Warrant 只發佈規則，不提供腳本、CLI 或檢查器。強制力來自 CI 與人工審查。當次交付缺少證據、驗證受阻或使用者略過檢查，皆為 partial。結構化結果讓原因可統計，但不是品質改善的因果證據。",
     link: {
       label: '為什麼這樣決定（ADR-0001）',
       href: `${repo}/blob/main/docs/adr/0001-enforcement-delegated-to-adopters.md`,

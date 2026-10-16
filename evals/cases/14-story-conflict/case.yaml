@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: 14-story-conflict
+context:
+  scaffold_script: scaffold.sh
