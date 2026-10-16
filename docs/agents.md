@@ -63,6 +63,41 @@ in. Follow these steps in order and stop where a step says so.
    remind the human to run the verification command in CI on every pull
    request.
 
+## Completion and later checks
+
+Current-delivery criteria must be observable in the uncommitted worktree,
+including staged, unstaged, and untracked changes. The declared verification
+command must pass on the final worktree, and each current-delivery criterion
+needs a passing observation. `complete` proves only that worktree delivery,
+not commit, push, CI, merge, or deployment success.
+
+An optional Follow-up verification subsection inside Acceptance Criteria may
+hold observations that genuinely depend on `commit`, `push`, `ci`, `merge`, or
+`deploy`. Specify each trigger, check, expected observation, and handoff and
+obtain approval with the Story before implementation. Implementation requirements
+and unmarked criteria remain current-delivery requirements. Do not reclassify
+failed, blocked, skipped, or unobserved checks after the fact, or defer the
+declared verification command.
+
+Keep Evidence, Skipped or blocked, and Residual risks in the report. Evidence
+contains exactly one
+`Warrant-Result: <result>; reasons=<reasons>; followups=<followups>` line.
+Approved follow-ups not yet triggered are listed with handoff steps under
+Skipped or blocked; they do not alone cause `partial`. Once triggered, an
+unrun or blocked follow-up means `partial`; a known failure means `partial`
+with `verification-failed`. Missing current-delivery evidence, environment
+blocks, and user-skipped checks also mean `partial`. Structured result counts
+are not causal evidence of improved quality.
+
+## Upgrade an existing block
+
+Updating a plugin does not update a manually pasted `AGENTS.md` block or
+reapprove existing Stories. When a human asks to upgrade, replace only the
+Warrant block with the new version, preserving the existing verification
+command and all unrelated repository rules. If the block boundary or command
+is unclear, stop and ask. Review and approve any Story changes before
+implementation; installation alone does not authorize reclassification.
+
 ## Summary
 
 | Agent | What to do | Evidence | Verified | Source |
@@ -151,8 +186,15 @@ as well, or merge it back into the root file.
 
 ## Optional: install the skill
 
-The block alone is enough for the three rules. The skill adds guidance for
-drafting and implementing a Story. Many agents load skills from `.agents/skills/`,
+The block alone includes the three rules and the essential drafting checks:
+read referenced files, flag ambiguous or unobservable criteria for a human,
+make current-delivery checks observable before commit across staged, unstaged,
+and untracked changes (not merely `main...HEAD`), and exempt the Story itself
+from file-scope limits.
+It also includes the upfront follow-up classification limits and completion
+report rules, so they apply even when no skill is loaded. The optional skill
+adds guidance and examples for drafting and implementing a Story. Many agents
+load skills from `.agents/skills/`,
 so you can copy the whole directory there:
 
 ```sh

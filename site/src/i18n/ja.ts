@@ -9,13 +9,13 @@ export const ja: Dictionary = {
   meta: {
     title: 'Warrant — 人間が承認した意図、証拠で証明された完了',
     description:
-      'AI コーディングエージェントのためのルール。作業は人間が承認した Story から始まり、リポジトリ自身の検証コマンドが証明したときだけ完了とみなされます。',
+      'AI コーディングエージェントのためのルール。人間が承認した意図に基づき、宣言された検証と受け入れ条件の証拠で今回の作業ツリーの納品完了を証明します。',
     ogImageAlt: 'Warrant：人間が承認した意図、証拠で証明された完了。',
   },
   hero: {
     title: 'エージェントは「完了」と言う。証拠を見せてもらおう。',
     subtitle: '人間が承認した意図、証拠で証明された完了。',
-    lede: 'Warrant は AI コーディングエージェントのためのルールです。作業は人間が承認した Story から始まり、リポジトリ自身の検証コマンドが通ったときだけ完了となります。すべての受け入れ条件は証拠に対応していなければなりません。',
+    lede: "Warrant は人間が承認した Story の範囲内で作業します。complete は今回の作業ツリーの納品のみを意味します。宣言された検証、今回の条件、発動済みの後続検査がすべて合格し、後続検査に既知の失敗がないことが必要です。",
     primaryCta: { label: 'GitHub で見る', href: repo },
     secondaryCta: { label: 'GitHub でスターを付ける', href: repo },
     installLabel: 'Claude Code でインストール',
@@ -54,7 +54,7 @@ export const ja: Dictionary = {
       },
       {
         title: '完了は証拠で証明する',
-        body: '完了を決めるのは AGENTS.md が宣言した唯一の検証コマンドだけ。すべての受け入れ条件は観察に対応します：コマンドとその出力、または file:line。',
+        body: '最終作業ツリーで AGENTS.md の検証コマンドを実行します。今回の納品条件すべてに commit 前の合格を示す観察が必要で、staged、unstaged、untracked の変更を含めます。',
         imageAlt: '台帳の各行が糸でターミナルから出てくるレシートとつながり、虫眼鏡が重なっている。',
       },
       {
@@ -69,12 +69,12 @@ export const ja: Dictionary = {
     title: 'Story の流れ',
     diagramLabel: 'Story、エージェントの作業、検証コマンド、完了報告へと続く流れ。',
     nodes: [
-      { title: 'Story', body: '目標、対象外、受け入れ条件――人間が commit する。' },
+      { title: 'Story', body: "目標、対象外、受け入れ条件。作業ツリーの検査と本当に後の段階が必要な検証の分類を、実装前に人間が承認します。事後の再分類は禁止です。" },
       { title: 'エージェントの作業', body: 'Story の範囲内だけ。それ以上はしない。' },
       { title: '検証コマンド', body: 'AGENTS.md が宣言した唯一のコマンド。' },
       {
         title: '完了報告',
-        body: '受け入れ条件ごとの証拠、スキップしたチェック、残存リスク。証明されていないものが一つでもあれば「一部完了」。',
+        body: "証拠、省略・ブロックされた検査、残存リスクと Warrant-Result の 1 行。承認済みで未発動の後続検査は pending にできます。発動後の証拠不足は partial、既知の失敗には verification-failed が必要です。complete は commit、push、CI、merge、deploy の成功を意味しません。",
       },
     ],
   },
@@ -84,7 +84,7 @@ export const ja: Dictionary = {
       { title: 'プラグインをインストール', body: 'Claude Code で 2 つのコマンドを実行（上記）。' },
       {
         title: 'ブロックを貼り、検証コマンドを宣言する',
-        body: 'agents-block.md を AGENTS.md に貼り付け、唯一の検証コマンドを記入します。そのコマンドをすべての pull request の CI で実行してください。',
+        body: 'agents-block.md を AGENTS.md に貼り付け、検証コマンドを記入して PR の CI で実行します。任意の skill がなくても、ブロックに基本の起草・報告チェックが含まれます。plugin 更新は貼り付けたブロックの更新や古い Story の再承認をしません。更新時は Warrant ブロックのみ置き換え、既存コマンドと無関係なルールを維持します。',
         link: {
           label: 'agents-block.md',
           href: `${repo}/blob/main/plugin/skills/warrant/agents-block.md`,
@@ -99,7 +99,7 @@ export const ja: Dictionary = {
   },
   why: {
     title: 'ツールではなく、ルール',
-    body: 'Warrant はスクリプトも CLI もチェッカーも提供しません。skill は助言にすぎず、エージェントは無視できます。悪い変更を実際に止めるのは、検証コマンドを実行する CI と、完了報告を読む人間です。Warrant はそのレビューに決まった形を与えます。すべての受け入れ条件を観察に対応させる。できなければ、報告は「一部完了」になります。',
+    body: "Warrant が提供するのはルールだけで、スクリプト、CLI、チェッカーではありません。強制力は CI と人間のレビューにあります。今回の納品の証拠不足、検証のブロック、ユーザーによるチェック省略は partial です。構造化された結果で理由を集計できますが、品質改善の因果的証拠にはなりません。",
     link: {
       label: 'この判断の理由（ADR-0001）',
       href: `${repo}/blob/main/docs/adr/0001-enforcement-delegated-to-adopters.md`,

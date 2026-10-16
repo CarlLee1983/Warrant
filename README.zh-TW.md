@@ -7,10 +7,12 @@ Warrant 讓 AI agent 的工作以人核准的意圖為界線，以 repo 自己�
 ## 三條規則
 
 1. **意圖由人核准**：工作從 `specs/stories/<slug>.md` 的 Story 開始。Story 只有目標（Goal）、範圍外（Out of Scope）、驗收條件（Acceptance Criteria）三段；只有在人把它 commit 進主分支，或在當次對話中明確指派時才算核准。
-2. **完成由證據證明**：完成只由 repo 在 `AGENTS.md` 宣告的唯一驗證指令決定，每條驗收條件都要對應到一次實際觀察。
+2. **完成由證據證明**：宣告的驗證指令須在最終工作樹通過，每條當次交付條件也須對應到通過的觀察。起草時就須確保這些條件可在 commit 前檢查，涵蓋 staged、unstaged 與 untracked 變更。
 3. **agent 不得改寫標準**：不改需求、不放寬驗收條件、不擴大範圍；需要做範圍外的事就停下回報。
 
-agent 最後交出三段式完成回報：驗收條件對應證據、跳過或被擋的檢查、殘餘風險。任何一條缺少通過的證據，結論就是「部分完成」。
+agent 最後交出三段式回報：Evidence、Skipped or blocked、Residual risks。Evidence 中恰有一行 `Warrant-Result: <result>; reasons=<reasons>; followups=<followups>`。`complete` 只代表當次工作樹交付已獲證明，不代表 commit、push、CI、merge 或 deploy 成功。當次條件缺少證據、驗證受阻或使用者要求略過檢查，都須回報 `partial`。
+
+Story 可在 Acceptance Criteria 內加入可選的 Follow-up verification 子段落，只列真正依賴 `commit`、`push`、`ci`、`merge` 或 `deploy` 才能觀察的檢查。每項須列明觸發階段、檢查方式、預期觀察及交接步驟，並在實作前隨 Story 一起經人核准。實作要求與未標記條件仍屬當次交付。已核准但尚未觸發的後續檢查須連同交接步驟列在 Skipped or blocked，不單獨導致部分完成；觸發後未執行或受阻則為 `partial`，已知失敗須回報 `partial` 與 `verification-failed`。不得事後將失敗、受阻、略過或未觀察的條件改列後續檢查，也不得延後宣告的驗證指令。
 
 Warrant 不決定「做哪件工作」，也不規範人如何審查。強制力來自採用端的 CI 與人工審查，理由見 [ADR-0001](docs/adr/0001-enforcement-delegated-to-adopters.md)。
 
@@ -47,6 +49,8 @@ Verification command: <verification command>
 
 從 PraxisBound 遷移：刪除 PraxisBound 安裝的協定檔案與標記檔，改貼 Warrant 區塊。既有的目錄形式 Story 原樣保留，視為歷史紀錄。
 
+更新 plugin 不會更新手動貼入的 `AGENTS.md` 區塊，也不會重新核准舊 Story。升級既有區塊時，只以新版取代 Warrant 區塊，保留 repo 原有的驗證指令及所有其他規則。Story 若有變更，須在實作前交人審查核准。
+
 ## 文件
 
 - [CONTEXT.md](CONTEXT.md)：詞彙表
@@ -78,6 +82,8 @@ make eval EVAL_PLUGIN=evals/mutant
 ```
 
 此時情境 03、05、09 應低於門檻。
+
+結構化結果讓完成原因可被統計；結果統計或較高完成率並不是品質改善的因果證據。eval 案例的靜態檢查不能證明 agent 的實際行為。
 
 ## 授權
 

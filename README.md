@@ -7,10 +7,12 @@ Warrant bounds an AI agent's work by human-approved intent, proves completion wi
 ## Three rules
 
 1. **Intent is approved by a human**: work starts from a Story at `specs/stories/<slug>.md`. A Story has exactly three sections: Goal, Out of Scope, and Acceptance Criteria. It counts as approved only when a human has committed it to the default branch, or has explicitly assigned it in the current session.
-2. **Completion is proven by evidence**: completion is decided only by the single verification command the repository declares in `AGENTS.md`, and every acceptance criterion must map to an actual observation.
+2. **Completion is proven by evidence**: the declared verification command must pass on the final worktree, and every current-delivery criterion must map to a passing observation. Draft these criteria so they can be checked before commit, including staged, unstaged, and untracked changes.
 3. **The agent must not rewrite the standard**: no changing requirements, no loosening acceptance criteria, no widening scope. When work outside the Story is needed, the agent stops and reports it.
 
-The agent finishes with a three-section completion report: evidence for each acceptance criterion, skipped or blocked checks, and residual risks. If any criterion lacks passing evidence, the conclusion is "partial".
+The agent finishes with three sections: Evidence, Skipped or blocked, and Residual risks. Evidence includes exactly one `Warrant-Result: <result>; reasons=<reasons>; followups=<followups>` line. `complete` means only the current worktree delivery is proven, not that commit, push, CI, merge, or deploy succeeded. Missing current-delivery evidence, blocked verification, or user-skipped checks means `partial`.
+
+A Story may include an optional Follow-up verification subsection within Acceptance Criteria for observations that genuinely require `commit`, `push`, `ci`, `merge`, or `deploy`. Each lists its trigger, check, expected observation, and handoff, and must be approved with the Story before implementation. Implementation requirements remain current-delivery criteria; unmarked criteria do too. Approved follow-ups whose trigger has not occurred are listed with handoff steps under Skipped or blocked and do not alone make the result partial. Once due, an unrun or blocked follow-up means `partial`; a known failure means `partial` with `verification-failed`. Never reclassify a failed, blocked, skipped, or unobserved criterion after the fact, or defer the declared verification command.
 
 Warrant does not decide which work to do, and it does not prescribe how humans review. Enforcement comes from the adopter's CI and human review; see [ADR-0001](docs/adr/0001-enforcement-delegated-to-adopters.md) for why.
 
@@ -47,6 +49,8 @@ Verification command: <verification command>
 
 Migrating from PraxisBound: delete the protocol files and marker files PraxisBound installed, and paste the Warrant block instead. Existing directory-style Stories stay as they are and are treated as historical records.
 
+Updating the plugin does not update a manually pasted `AGENTS.md` block or reapprove old Stories. To upgrade an existing block, replace only the Warrant block with the new version, preserving the repository’s declared verification command and every unrelated repository rule. Review any Story changes with a human before implementation.
+
 ## Documentation
 
 - [CONTEXT.md](CONTEXT.md): glossary
@@ -78,6 +82,8 @@ make eval EVAL_PLUGIN=evals/mutant
 ```
 
 In that run, scenarios 03, 05, and 09 should fall below the threshold.
+
+Structured results make completion reasons countable; result statistics or a higher completion rate are not causal evidence of improved quality. Static checks of eval cases do not establish agent behaviour.
 
 ## License
 
