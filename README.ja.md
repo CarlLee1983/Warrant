@@ -30,6 +30,22 @@ codex plugin marketplace add CarlLee1983/Warrant
 codex plugin add warrant@warrant
 ```
 
+## インストールと更新（Skills CLI）
+
+[Skills CLI](https://github.com/vercel-labs/skills) で Warrant スキルをインストールします：
+
+```sh
+npx skills add https://github.com/CarlLee1983/Warrant/tree/main/plugin/skills/warrant --skill warrant
+```
+
+Skills CLI でインストールした既存のスキルを更新します：
+
+```sh
+npx skills update warrant
+```
+
+スキルのインストール後、下の「導入」の手順に従ってリポジトリを設定してください。
+
 ## 導入
 
 1. [`plugin/skills/warrant/agents-block.md`](plugin/skills/warrant/agents-block.md) をリポジトリの `AGENTS.md` に貼り付け、唯一の検証コマンドを記入します。
