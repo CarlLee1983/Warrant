@@ -9,17 +9,22 @@ interface Props {
 }
 
 const { t } = Astro.props;
+// Keep each sentence together when space allows, without changing localized copy.
+const titleSentences = Array.from(
+  new Intl.Segmenter(undefined, { granularity: 'sentence' }).segment(t.title),
+  ({ segment }) => segment,
+);
 ---
 
 <section id="hero">
   <div class="split">
     <div>
-      <h1>{t.title}</h1>
+      <h1>{titleSentences.map((sentence) => <span>{sentence}</span>)}</h1>
       <p class="eyebrow">{t.subtitle}</p>
       <p class="lede">{t.lede}</p>
       <p class="actions">
         <a class="btn btn-primary" href={t.primaryCta.href}>{t.primaryCta.label}</a>
-        <a class="btn" href={t.secondaryCta.href}>{t.secondaryCta.label}</a>
+        <a class="secondary-cta" href={t.secondaryCta.href}>{t.secondaryCta.label}</a>
       </p>
       <InstallBlock
         label={t.installLabel}
@@ -33,24 +38,58 @@ const { t } = Astro.props;
       alt={t.imageAlt}
       ratio="3 / 2"
       eager
-      sizes="(min-width: 48rem) 28rem, 100vw"
+      sizes="(min-width: 76rem) 26rem, (min-width: 60rem) 38vw, 90vw"
     />
   </div>
 </section>
 
 <style>
   section {
-    padding-top: 3rem;
+    padding-top: clamp(3rem, 6vw, 5.5rem);
+  }
+  h1 {
+    max-width: 12ch;
+  }
+  h1:lang(zh-Hant-TW),
+  h1:lang(ja) {
+    max-width: 11em;
+  }
+  h1:lang(zh-Hant-TW),
+  h1:lang(ja) {
+    font-size: clamp(2.25rem, 3.8vw, 3.5rem);
+  }
+  h1 span {
+    display: block;
+    text-wrap: balance;
+  }
+  h1 span:last-child {
+    color: var(--accent);
   }
   .eyebrow {
-    text-transform: none;
-    letter-spacing: 0;
-    font-size: 1rem;
+    max-width: 38ch;
   }
   .actions {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
+    gap: 1rem 1.5rem;
+    margin-top: 1.75rem;
+  }
+  .secondary-cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.875rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+  @media (min-width: 60rem) {
+    .split {
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 3rem;
+    }
+    section :global(.illustration) {
+      transform: rotate(2deg);
+      box-shadow: 0 1.5rem 3rem -2rem #51483655;
+    }
   }
 </style>

@@ -23,12 +23,14 @@ const images = [intent, evidence, standard];
             src={images[i]}
             alt={item.imageAlt}
             ratio="1 / 1"
-            sizes="(min-width: 48rem) 20rem, 100vw"
+            sizes="(min-width: 48rem) 12rem, 40vw"
             widths={[320, 640, 960]}
           />
           <p class="mono number" aria-hidden="true" />
-          <h3>{item.title}</h3>
-          <p>{item.body}</p>
+          <div class="rule-copy">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </div>
         </li>
       ))
     }
@@ -38,32 +40,69 @@ const images = [intent, evidence, standard];
 <style>
   ol {
     list-style: none;
-    margin: 2rem 0 0;
+    margin: 2.5rem 0 0;
     padding: 0;
     counter-reset: rule;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-  }
-  @media (min-width: 48rem) {
-    ol {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 2rem;
-    }
   }
   li {
     counter-increment: rule;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--rule);
+  }
+  li:last-child {
+    padding-bottom: 0;
+  }
+  li :global(.illustration) {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    max-width: 12rem;
+    justify-self: end;
   }
   .number::before {
     content: counter(rule, decimal-leading-zero);
   }
   .number {
+    grid-column: 1;
+    grid-row: 1;
     color: var(--accent);
-    font-size: 0.875rem;
-    margin: 1rem 0 0.25rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.06em;
+    margin: 0;
   }
-  li p:last-child {
+  .rule-copy {
+    grid-column: 1 / -1;
+  }
+  h3 {
+    max-width: 25ch;
+    font-size: clamp(1.625rem, 2.6vw, 2.25rem);
+    margin-bottom: 1rem;
+  }
+  .rule-copy p {
+    max-width: 53ch;
     color: var(--graphite);
     margin: 0;
+  }
+  @media (min-width: 48rem) {
+    li {
+      grid-template-columns: 5rem minmax(0, 1fr) 12rem;
+      gap: 2rem;
+      padding-block: 2.5rem;
+    }
+    .number {
+      align-self: start;
+    }
+    .rule-copy {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    li :global(.illustration) {
+      grid-column: 3;
+    }
   }
 </style>
