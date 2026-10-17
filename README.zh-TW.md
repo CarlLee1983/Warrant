@@ -30,6 +30,22 @@ codex plugin marketplace add CarlLee1983/Warrant
 codex plugin add warrant@warrant
 ```
 
+## 安裝與更新（Skills CLI）
+
+使用 [Skills CLI](https://github.com/vercel-labs/skills) 安裝 Warrant 技能：
+
+```sh
+npx skills add https://github.com/CarlLee1983/Warrant/tree/main/plugin/skills/warrant --skill warrant
+```
+
+更新透過 Skills CLI 安裝的既有技能：
+
+```sh
+npx skills update warrant
+```
+
+安裝技能後，仍需依照下方「採用」步驟設定你的 repo。
+
 ## 採用
 
 1. 把 [`plugin/skills/warrant/agents-block.md`](plugin/skills/warrant/agents-block.md) 貼進 repo 的 `AGENTS.md`，填入唯一的驗證指令。

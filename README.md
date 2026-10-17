@@ -30,6 +30,22 @@ codex plugin marketplace add CarlLee1983/Warrant
 codex plugin add warrant@warrant
 ```
 
+## Install and update (Skills CLI)
+
+Install the Warrant skill with the [Skills CLI](https://github.com/vercel-labs/skills):
+
+```sh
+npx skills add https://github.com/CarlLee1983/Warrant/tree/main/plugin/skills/warrant --skill warrant
+```
+
+Update an existing installation managed by the Skills CLI:
+
+```sh
+npx skills update warrant
+```
+
+After installing the skill, follow the Adopt steps below to configure your repository.
+
 ## Adopt
 
 1. Paste [`plugin/skills/warrant/agents-block.md`](plugin/skills/warrant/agents-block.md) into your repository's `AGENTS.md` and fill in the single verification command.
