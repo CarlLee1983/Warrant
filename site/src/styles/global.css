@@ -1,28 +1,32 @@
 :root {
   --paper: #f4f1ea;
-  --ink: #1f2a37;
-  --graphite: #5b6270;
-  --accent: #9e2f2a;
-  --btn-bg: #9e2f2a;
-  --btn-ink: #f8f5ee;
-  --rule: #d9d4c7;
+  --ink: #292b29;
+  --graphite: #64665f;
+  --accent: #963e32;
+  --btn-bg: #963e32;
+  --btn-hover: #82352b;
+  --btn-ink: #fff9f0;
+  --rule: #d4d0c5;
   --surface: #ebe7dc;
   --mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
-  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --sans: 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
   --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --page-width: 76rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
   color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #14191f;
-    --ink: #ece8dd;
-    --graphite: #9ca3af;
-    --accent: #d6615b;
-    --btn-bg: #a8403a;
-    --btn-ink: #f8f5ee;
-    --rule: #2b333d;
-    --surface: #1c232b;
+    --paper: #1c1e1c;
+    --ink: #eeeae0;
+    --graphite: #b4b5aa;
+    --accent: #df9684;
+    --btn-bg: #ae5040;
+    --btn-hover: #963f32;
+    --btn-ink: #fff9f0;
+    --rule: #41443e;
+    --surface: #282b26;
   }
 }
 
@@ -40,20 +44,27 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font: 1.0625rem/1.65 var(--sans);
+  font: 1.0625rem/1.75 var(--sans);
   overflow-wrap: anywhere;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
 }
 
 main,
 footer {
-  max-width: 64rem;
+  max-width: var(--page-width);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding-inline: var(--gutter);
 }
 
 section {
-  padding: 4.5rem 0;
+  padding: clamp(3.5rem, 7vw, 6.5rem) 0 clamp(4rem, 8vw, 7.5rem);
   border-top: 1px solid var(--rule);
+  scroll-margin-top: 2rem;
 }
 
 section:first-child {
@@ -64,30 +75,38 @@ h1,
 h2,
 h3 {
   font-family: var(--serif);
-  line-height: 1.15;
-  margin: 0 0 1rem;
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  line-height: 1.12;
+  margin: 0 0 1.5rem;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 
 h1 {
-  font-size: clamp(2.25rem, 8vw, 4rem);
+  font-size: clamp(3.25rem, 6.4vw, 5.75rem);
 }
 
 h2 {
-  font-size: clamp(1.6rem, 5vw, 2.25rem);
+  font-size: clamp(2.125rem, 3.6vw, 3.25rem);
+  max-width: 24ch;
 }
 
 h3 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
 }
 
 p {
-  margin: 0 0 1rem;
+  max-width: 65ch;
+  margin: 0 0 1.25rem;
+  text-wrap: pretty;
 }
 
 a {
   color: var(--ink);
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 1px;
   text-decoration-color: var(--accent);
 }
 
@@ -98,35 +117,43 @@ a:hover {
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: 5px;
 }
 
 code,
 .mono {
   font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .eyebrow {
-  font: 0.8125rem/1.4 var(--mono);
-  color: var(--graphite);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.75rem;
+  font: 500 0.8125rem/1.6 var(--mono);
+  color: var(--accent);
+  letter-spacing: 0.025em;
+  margin-bottom: 1.25rem;
 }
 
 .lede {
-  font-size: 1.1875rem;
+  font-size: 1.0625rem;
   color: var(--graphite);
-  max-width: 40rem;
+  max-width: 49ch;
 }
 
 .btn {
-  display: inline-block;
-  padding: 0.7rem 1.25rem;
-  border: 1px solid var(--ink);
-  border-radius: 0.25rem;
-  font: 600 0.9375rem/1.2 var(--sans);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.875rem;
+  padding: 0.8rem 1.3rem;
+  border: 1px solid var(--rule);
+  border-radius: 0.2rem;
+  font: 600 0.9375rem/1.4 var(--sans);
   text-decoration: none;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+  background: var(--surface);
 }
 
 .btn-primary {
@@ -136,54 +163,72 @@ code,
 }
 
 .btn-primary:hover {
+  background: var(--btn-hover);
+  border-color: var(--btn-hover);
   color: var(--btn-ink);
-  filter: brightness(1.1);
+}
+
+.btn:active,
+button:active {
+  transform: translateY(2px);
 }
 
 .illustration {
   margin: 0;
   overflow: hidden;
-  border: 1px solid var(--rule);
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
   background: var(--surface);
 }
 
+.illustration picture,
 .illustration img {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.illustration img {
   object-fit: cover;
 }
 
 .split {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 2rem;
+  gap: 2.5rem;
   align-items: center;
 }
 
-@media (min-width: 48rem) {
+.split > * {
+  min-width: 0;
+}
+
+@media (min-width: 60rem) {
   .split {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 3rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(3rem, 6vw, 6rem);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
   .btn,
-  a {
-    transition: color 0.15s, filter 0.15s;
+  a,
+  button {
+    transition: color 200ms, background-color 200ms, border-color 200ms,
+      filter 200ms, transform 200ms;
   }
 }
 
 :lang(zh-Hant-TW) {
-  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
-  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Songti TC', 'Noto Serif TC', 'PMingLiU', serif;
+  --sans: 'Avenir Next', 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  --serif: 'Iowan Old Style', 'Songti TC', 'Noto Serif TC', 'PMingLiU', serif;
 }
 
 :lang(ja) {
-  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', sans-serif;
-  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Hiragino Mincho ProN', 'Noto Serif JP', 'Yu Mincho', serif;
+  --sans: 'Avenir Next', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', sans-serif;
+  --serif: 'Iowan Old Style', 'Hiragino Mincho ProN', 'Noto Serif JP', 'Yu Mincho', serif;
   word-break: auto-phrase;
 }
 
@@ -194,16 +239,18 @@ code,
 
 :lang(zh-Hant-TW) h1,
 :lang(ja) h1 {
-  font-size: clamp(1.75rem, 6vw, 3.1rem);
+  font-size: clamp(2.5rem, 4.6vw, 4.25rem);
+  line-height: 1.3;
+  letter-spacing: -0.025em;
 }
 
-:lang(zh-Hant-TW) h1,
 :lang(zh-Hant-TW) h2,
-:lang(ja) h1,
 :lang(ja) h2 {
-  text-wrap: balance;
+  font-size: clamp(1.875rem, 3.2vw, 2.75rem);
+  line-height: 1.4;
 }
 
-:lang(ja) h1 {
-  font-size: clamp(1.75rem, 6vw, 2.6rem);
+:lang(zh-Hant-TW) h3,
+:lang(ja) h3 {
+  line-height: 1.5;
 }

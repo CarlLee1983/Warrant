@@ -8,7 +8,7 @@ interface Props {
 const { t } = Astro.props;
 // One viewBox unit is 1px at a 16px root, so the diagram width and the caption
 // row height below stay in step with the node pitch.
-const pitch = 120;
+const pitch = 176;
 const nodeHeight = 64;
 const width = 256;
 const height = pitch * (t.nodes.length - 1) + nodeHeight;
@@ -131,19 +131,19 @@ const height = pitch * (t.nodes.length - 1) + nodeHeight;
     color: var(--graphite);
     margin: 0;
   }
-  @media (min-width: 48rem) {
+  @media (min-width: 60rem) {
     .flow {
       grid-template-columns: 16rem minmax(0, 1fr);
       gap: 3rem;
     }
     li {
-      height: 7.5rem;
+      min-height: 11rem;
       margin: 0;
       padding-top: 1.1rem;
       /* Align the first line with the node it describes. */
     }
     li:last-child {
-      height: auto;
+      min-height: 0;
     }
   }
 </style>
