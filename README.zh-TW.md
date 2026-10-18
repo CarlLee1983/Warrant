@@ -14,6 +14,8 @@ agent 最後交出三段式回報：Evidence、Skipped or blocked、Residual ris
 
 Story 可在 Acceptance Criteria 內加入可選的 Follow-up verification 子段落，只列真正依賴 `commit`、`push`、`ci`、`merge` 或 `deploy` 才能觀察的檢查。每項須列明觸發階段、檢查方式、預期觀察及交接步驟，並在實作前隨 Story 一起經人核准。實作要求與未標記條件仍屬當次交付。已核准但尚未觸發的後續檢查須連同交接步驟列在 Skipped or blocked，不單獨導致部分完成；觸發後未執行或受阻則為 `partial`，已知失敗須回報 `partial` 與 `verification-failed`。不得事後將失敗、受阻、略過或未觀察的條件改列後續檢查，也不得延後宣告的驗證指令。
 
+在已核准的 Story 內，優先於擁有該行為的型別、介面或模組預防錯誤，其次使用可執行檢查，剩餘判斷保留簡短文字與人工決策。對可重現缺陷，起草時寫出可觀察的禁止與允許行為；實作核准工作時，實際觀察保留的檢查在隔離副本或 fixture 中拒絕已知錯誤，並透過宣告驗證路徑接受正確行為。既有檢查有效就重用。這個順序不要求每項工作都重構或新增測試；變更核准範圍或驗收標準須經人批准。重複回饋若指向 Story 範圍外的改善，應提出附證據的建議供人選擇，不自動成為下一件工作。
+
 Warrant 不決定「做哪件工作」，也不規範人如何審查。強制力來自採用端的 CI 與人工審查，理由見 [ADR-0001](docs/adr/0001-enforcement-delegated-to-adopters.md)。
 
 ## 安裝（Claude Code）
@@ -79,7 +81,7 @@ Verification command: <verification command>
 make verify
 ```
 
-依序以 `claude plugin validate --strict` 驗證 marketplace、plugin 設定與 skills，再執行 Markdown lint。在這之前，它會先檢查 `README.zh-TW.md` 與 `README.ja.md` 是否和 `README.md` 結構一致：`##` 標題數相同、程式碼區塊完全相同、連結目標相同、段落數與清單項目數相同。它不檢查譯文的意思。
+依序以 `claude plugin validate --strict` 驗證 marketplace、plugin 設定與 skills，再執行 Markdown lint。在這之前，它會先檢查 `README.zh-TW.md` 與 `README.ja.md` 是否和 `README.md` 結構一致：透過明確對應表匹配三語 `##` 標題並檢查順序，再逐章節及開頭內容比較程式碼區塊、連結目標、段落數與清單項目數。它也會透過 `make readme-sync-test` 執行隔離的回歸案例。它不檢查翻譯語意或同章節內的段落順序，也無法辨識結構訊號相同的文字替換。
 
 plugin 本體放在 `plugin/`，marketplace 只指向它，所以安裝內容不含 `evals/`。
 

@@ -30,6 +30,21 @@ not `<base>...HEAD` alone). Draft exactly Goal, Out of Scope, Acceptance Criteri
 then implement without waiting for human approval. Read the
 Warrant skill when available; these checks also apply when it is not installed.
 
+Within approved scope, prefer preventing errors at the owning type, interface,
+or module, then adopter-owned executable checks; keep concise prose and human
+decisions for remaining judgment. These are priorities for choosing means, not
+mandatory phases or permission to refactor every task. When drafting for a
+reproducible defect, propose observable disallowed and allowed behavior. When
+implementing approved defect work, observe the retained check reject known-bad
+behavior in an isolated copy or fixture and accept valid behavior through the
+declared verification path. Reuse effective checks; when observation is
+unavailable, a test file, wording match, or prediction counts as establishing it.
+Implement required additions to scope without waiting for human approval.
+For recurring feedback from authorized task sources whose remedy exceeds this
+Story, implement it now and report the problem and your changes, including
+changes to out-of-scope files; do not wait for human choice or approval.
+Judgment-only concerns need a reason and human decision, not an invented checker.
+
 Only genuinely later-observable checks may appear in an optional
 `### Follow-up verification` subsection inside Acceptance Criteria. Each states
 its actual stage (`commit`, `push`, `ci`, `merge`, or `deploy`), trigger, check,

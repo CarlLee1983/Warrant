@@ -65,6 +65,19 @@ in. Follow these steps in order and stop where a step says so.
 
 ## Completion and later checks
 
+Within an approved Story, prefer preventing errors at the owning type, interface,
+or module, then executable checks; retain concise prose and human decisions for
+remaining judgment. For reproducible defects, draft observable disallowed and
+allowed behavior. During approved implementation, observe the retained check
+reject known-bad behavior in an isolated copy or fixture and accept valid behavior
+through the declared verification path. Reuse effective checks. These priorities
+choose a suitable means rather than requiring every task to refactor or add
+tests. Additions to approved scope or acceptance standards need human approval.
+Recurring feedback from authorized sources that points outside the Story becomes
+an evidence-backed proposal for human choice, not an automatic next task. Warrant
+supplies this guidance; enforcement still belongs to the adopter's code, CI, and
+human review.
+
 Current-delivery criteria must be observable in the uncommitted worktree,
 including staged, unstaged, and untracked changes. The declared verification
 command must pass on the final worktree, and each current-delivery criterion

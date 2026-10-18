@@ -1,42 +1,19 @@
-.PHONY: verify readme-sync site eval
+.PHONY: verify readme-sync readme-sync-test site eval
 
-verify: readme-sync site
+verify: readme-sync readme-sync-test site
 	claude plugin validate --strict .
 	claude plugin validate --strict plugin/.claude-plugin/plugin.json
 	claude plugin validate --strict plugin/skills
 	npx --yes markdownlint-cli2@0.23.3
 
-# README.md is the source; its translations must keep the same structure:
-# `##` heading count, code block contents, relative link targets, paragraph
-# count, and list item count. Links between the READMEs and #anchors are
-# ignored. Meaning is not checked.
-# - A list item is a line matching the ERE `^([0-9]+\.|-)[[:space:]]`.
-# - A paragraph is a block of consecutive non-empty lines outside code blocks
-#   whose first line is not a heading (`#`), not a list item, and not the
-#   language switcher on line 3.
-README_TRANSLATIONS := README.zh-TW.md README.ja.md
-README_LIST_ITEM := ^([0-9]+\.|-)[[:space:]]
-
+# README.md is the source; translations must keep matching section structure.
+# See scripts/readme-sync.mjs for the explicit heading map and legacy signal rules.
+# This repository-internal check compares structure, not translation meaning.
 readme-sync:
-	@tmp=$$(mktemp -d); status=0; \
-	for f in README.md $(README_TRANSLATIONS); do \
-		grep -c '^## ' $$f > $$tmp/$$f.headings; \
-		grep -cE '$(README_LIST_ITEM)' $$f > $$tmp/$$f.list-items; \
-		awk '/^```/{c=!c; p=1; next} c{next} /^$$/{p=0; next} \
-			!p{p=1; if (!(/^#/ || /$(README_LIST_ITEM)/ || NR == 3)) n++} \
-			END{print n+0}' $$f > $$tmp/$$f.paragraphs; \
-		awk '/^```/{f=!f;next} f' $$f > $$tmp/$$f.code; \
-		grep -oE '\]\([^)]+\)' $$f | sed -e 's/^](//' -e 's/)$$//' -e 's/#.*//' \
-			| grep -vE '^(README(\.[A-Za-z-]+)?\.md)?$$' | sort -u > $$tmp/$$f.links; \
-	done; \
-	for f in $(README_TRANSLATIONS); do \
-		for k in headings code links paragraphs list-items; do \
-			if ! diff -u $$tmp/README.md.$$k $$tmp/$$f.$$k; then \
-				echo "readme-sync: $$f differs from README.md ($$k)"; status=1; \
-			fi; \
-		done; \
-	done; \
-	rm -rf "$$tmp"; exit $$status
+	@node scripts/readme-sync.mjs
+
+readme-sync-test:
+	node --test scripts/readme-sync.test.mjs
 
 # Project site (site/): a clean install, type check, then a production build.
 # The build output is the completion evidence; site/dist is git ignored.

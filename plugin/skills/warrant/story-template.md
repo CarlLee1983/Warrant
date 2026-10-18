@@ -12,7 +12,7 @@
 
 1. {One delivery statement observable in the uncommitted working tree, with its check and expected observation. Keep implementation requirements here.}
 
-{Before approval: read every cited file, flag vague/uncheckable wording and propose a rewrite for the human, and exempt this Story file from file-scope limits. Include staged, unstaged, and untracked files; a committed-only diff is insufficient. Unmarked criteria remain current requirements. Never defer the declared verification command. Remove these drafting instructions from the finished Story.}
+{Before approval: read every cited file, flag vague/uncheckable wording and propose a rewrite for the human, and exempt this Story file from file-scope limits. Include staged, unstaged, and untracked files; a committed-only diff is insufficient. Unmarked criteria remain current requirements. Never defer the declared verification command. For a reproducible defect, describe disallowed and allowed behavior and how an existing or proposed retained check will reject the known-bad behavior and accept the valid behavior. Choose a suitable means within scope; judgment-only work need not invent executable checks. Remove these drafting instructions from the finished Story.}
 
 ### Follow-up verification
 
