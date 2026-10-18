@@ -14,6 +14,8 @@ The agent finishes with three sections: Evidence, Skipped or blocked, and Residu
 
 A Story may include an optional Follow-up verification subsection within Acceptance Criteria for observations that genuinely require `commit`, `push`, `ci`, `merge`, or `deploy`. Each lists its trigger, check, expected observation, and handoff, and must be approved with the Story before implementation. Implementation requirements remain current-delivery criteria; unmarked criteria do too. Approved follow-ups whose trigger has not occurred are listed with handoff steps under Skipped or blocked and do not alone make the result partial. Once due, an unrun or blocked follow-up means `partial`; a known failure means `partial` with `verification-failed`. Never reclassify a failed, blocked, skipped, or unobserved criterion after the fact, or defer the declared verification command.
 
+Within an approved Story, prefer preventing errors in the owning type, interface, or module, then executable checks, with concise prose and human decisions for remaining judgment. For reproducible defects, draft observable disallowed and allowed behavior; during approved implementation, observe the retained check reject known-bad behavior in an isolated copy or fixture and accept valid behavior through the declared verification path. Reuse effective checks. These priorities do not require every task to refactor or add tests: changes to approved scope or acceptance standards need human approval. Recurring feedback that points outside the Story becomes an evidence-backed proposal for the human to choose, not an automatic next task.
+
 Warrant does not decide which work to do, and it does not prescribe how humans review. Enforcement comes from the adopter's CI and human review; see [ADR-0001](docs/adr/0001-enforcement-delegated-to-adopters.md) for why.
 
 ## Install (Claude Code)
@@ -79,7 +81,7 @@ Updating the plugin does not update a manually pasted `AGENTS.md` block or reapp
 make verify
 ```
 
-Validates the marketplace, the plugin manifest, and the skills with `claude plugin validate --strict`, in that order, then runs Markdown lint. Before that, it checks that `README.zh-TW.md` and `README.ja.md` keep this file's structure: the same number of `##` headings, identical code blocks, the same link targets, and the same number of paragraphs and list items. It does not check what the translations mean.
+Validates the marketplace, the plugin manifest, and the skills with `claude plugin validate --strict`, in that order, then runs Markdown lint. Before that, it checks that `README.zh-TW.md` and `README.ja.md` keep this file's structure: an explicit mapping matches translated `##` headings and checks their order, then compares code blocks, link targets, paragraph counts, and list item counts within each section and the opening content. It also runs isolated regression cases through `make readme-sync-test`. It does not check translation meaning or paragraph order within a section, and cannot detect text substitutions with identical structural signals.
 
 The plugin itself lives in `plugin/`, and the marketplace points only there, so an installation does not include `evals/`.
 

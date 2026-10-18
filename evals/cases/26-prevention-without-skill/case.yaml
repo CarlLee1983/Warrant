@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: 26-prevention-without-skill
+context:
+  scaffold_script: scaffold.sh
